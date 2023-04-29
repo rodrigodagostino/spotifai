@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>Welcome to SvelteKit</title>
+  <title>Spotifai</title>
 </svelte:head>
 
 <main class="app-main">
