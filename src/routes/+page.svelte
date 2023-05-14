@@ -1,5 +1,4 @@
 <script lang="ts">
-  import './styles.css'
   import svelteLogo from '$lib/images/svelte-logo.svg'
 </script>
 
