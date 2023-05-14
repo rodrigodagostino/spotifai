@@ -1,8 +1,10 @@
 import { SPOTIFY_BASE_URL } from '$env/static/private'
+import { redirect } from '@sveltejs/kit'
 import type { LayoutServerLoad } from './$types'
 
-export const load: LayoutServerLoad = async ({ cookies, fetch }) => {
+export const load: LayoutServerLoad = async ({ cookies, fetch, url }) => {
   const accessToken = cookies.get('access_token')
+  const refreshToken = cookies.get('refresh_token')
 
   if (!accessToken) return { user: null }
 
@@ -16,6 +18,12 @@ export const load: LayoutServerLoad = async ({ cookies, fetch }) => {
     const profile: SpotifyApi.CurrentUsersProfileResponse = await profileResponse.json()
     return {
       user: profile,
+    }
+  } else if (profileResponse.status === 401 && refreshToken) {
+    const refreshResponse = await fetch('/api/auth/refresh')
+    if (refreshResponse.ok) throw redirect(307, url.pathname)
+    return {
+      user: null,
     }
   } else {
     return {
