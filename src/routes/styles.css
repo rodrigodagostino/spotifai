@@ -44,6 +44,14 @@
   --gray-950: #22222b;
   --black: #15151a;
   --black-rich: #000;
+
+  --spotify-background: #1ed760;
+  --spotify-background-highlight: #1fdf64;
+  --spotify-background-press: #169c46;
+
+  --spotify-text: #1ed760;
+  --spotify-text-highlight: #1fdf64;
+  --spotify-text-press: #169c46;
 }
 
 /**
@@ -81,18 +89,18 @@ hr {
 
 ::selection {
   color: var(--white);
-  background: var(--teal-600);
+  background: var(--gray-600);
 }
 
 a {
-  color: var(--teal-600);
-  transition: color 0.32s, outline 0.32s;
+  color: var(--white);
+  transition: color 0.12s, outline 0.12s;
   outline: 1px dotted transparent;
 }
 
 a:focus,
 a:hover {
-  color: var(--emerald-500);
+  color: var(--white-rich);
 }
 
 a:focus-visible {
@@ -112,7 +120,7 @@ button {
 input,
 textarea,
 button {
-  border: 1px solid gray;
+  border: 1px solid var(--gray-500);
 }
 
 button {
@@ -147,8 +155,8 @@ table {
 body {
   font-family: var(--font-main);
   font-size: 1rem;
-  color: var(--gray-600);
-  background-color: var(--gray-100);
+  color: var(--gray-400);
+  background-color: var(--black);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
