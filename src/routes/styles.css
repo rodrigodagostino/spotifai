@@ -155,11 +155,10 @@ table {
 body {
   font-family: var(--font-main);
   font-size: 1rem;
-  color: var(--gray-400);
+  color: var(--white);
   background-color: var(--black);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   display: flex;
   justify-content: center;
 }
@@ -167,5 +166,6 @@ body {
 .app {
   display: flex;
   flex-direction: column;
+  width: 100%;
   min-height: 100vh;
 }
