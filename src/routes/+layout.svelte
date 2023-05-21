@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { LayoutData } from './$types'
-  import ButtonLogout from '$components/ButtonLogout.svelte'
+  import Sidebar from '$components/SidePanel.svelte'
   import './styles.css'
 
   export let data: LayoutData
@@ -8,9 +8,20 @@
   $: user = data.user
 </script>
 
-{#if user}
-  <p>Hello, {data.user?.display_name}</p>
-  <ButtonLogout />
-{/if}
+<div class="page__inner">
+  {#if user}
+    <Sidebar />
+  {/if}
+  <main class="page-main" id="main">
+    <slot />
+  </main>
+</div>
 
-<slot />
+<style lang="scss">
+  .page__inner {
+    display: grid;
+    grid-template-columns: 20rem 1fr;
+    grid-gap: 0.5rem;
+    padding: 0.5rem;
+  }
+</style>
