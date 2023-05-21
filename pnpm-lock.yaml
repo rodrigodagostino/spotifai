@@ -1,9 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
-  lucide-svelte:
-    specifier: 0.220.0
-    version: 0.220.0(svelte@3.59.1)
+  '@tabler/icons-svelte':
+    specifier: 2.20.0
+    version: 2.20.0(svelte@3.59.1)
   pkce-gen:
     specifier: 1.1.0
     version: 1.1.0
@@ -414,6 +414,19 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@tabler/icons-svelte@2.20.0(svelte@3.59.1):
+    resolution: {integrity: sha512-FePpKKSTA2edRr37CR1aOOd+GUkx/wRaMwUcJOIGP+CGlSGaZw2fXOzwNkuCZtLZYAQVxgsQoD9URiFcrhrHzw==}
+    peerDependencies:
+      svelte: ^3.49.0
+    dependencies:
+      '@tabler/icons': 2.20.0
+      svelte: 3.59.1
+    dev: false
+
+  /@tabler/icons@2.20.0:
+    resolution: {integrity: sha512-BsUEJoqREs8bqcrf5HfJBq6/rDvsRI3h+T+0X1o7i8LBHonsH0iAngcyL0I82YKoSy9NiVDvM3LV63zDP0nPYQ==}
+    dev: false
 
   /@types/cookie@0.5.1:
     resolution: {integrity: sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==}
@@ -1189,14 +1202,6 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
-
-  /lucide-svelte@0.220.0(svelte@3.59.1):
-    resolution: {integrity: sha512-NkMuVgKDXZOc3slRGZq/yWOJiWXmp0dnminAVHlqw0ntgT+6XufRXAqSGzsEB7gBvuGozRv1tMciiX97jx/JQg==}
-    peerDependencies:
-      svelte: ^3.49.0
-    dependencies:
-      svelte: 3.59.1
-    dev: false
 
   /magic-string@0.27.0:
     resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
