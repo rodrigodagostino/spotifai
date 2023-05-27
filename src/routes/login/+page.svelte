@@ -20,6 +20,11 @@
 </div>
 
 <style lang="scss">
+  :global(.page__inner) {
+    grid-template-columns: 1fr !important;
+    padding: 0 !important;
+  }
+
   .login {
     min-height: 100vh;
     padding-inline: 1.25rem;
