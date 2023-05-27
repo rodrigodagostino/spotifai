@@ -46,7 +46,7 @@
   .side-panel {
     padding: 1rem;
     border-radius: 0.5rem;
-    background-color: var(--gray-900);
+    background-color: var(--gray-950);
 
     :global(.spotify-logo) {
       height: 2.25rem;
@@ -55,6 +55,7 @@
     &__menu {
       display: flex;
       flex-direction: column;
+      align-items: start;
       gap: 1.5rem;
       margin-top: 2rem;
       list-style: none;
@@ -64,7 +65,20 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      font-weight: 500;
+      color: var(--gray-300);
       text-decoration: none;
+
+      &[aria-current='page'],
+      &:focus,
+      &:hover {
+        color: var(--white-rich);
+      }
+
+      :global(.tabler-icon) {
+        width: 1.75rem;
+        height: 1.75rem;
+      }
     }
   }
 </style>
