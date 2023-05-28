@@ -18,6 +18,7 @@
       | 'tertiary-solid'
       | 'tertiary-outline'
       | 'text'
+      | 'icon'
     size?: 'small' | 'medium' | 'large'
   }
 
@@ -29,7 +30,8 @@
     | 'secondary-outline'
     | 'tertiary-solid'
     | 'tertiary-outline'
-    | 'text' = 'secondary-solid'
+    | 'text'
+    | 'icon' = 'secondary-solid'
   export let size: 'small' | 'medium' | 'large' = 'small'
 </script>
 
@@ -37,11 +39,10 @@
   this={element}
   {...$$restProps}
   class="button button--{variant} button--{size} {$$restProps.class ? $$restProps.class : ''}"
+  on:click
 >
   {#if $$slots.default}
-    <span class="button__text">
-      <slot />
-    </span>
+    <slot />
   {/if}
 </svelte:element>
 
@@ -163,6 +164,7 @@
 
     &--text {
       color: var(--white);
+      background-color: transparent;
 
       &:focus,
       &:hover {
@@ -170,7 +172,22 @@
       }
 
       &:active {
-        color: var(--gray-200);
+        background-color: hsla(0, 0%, 100%, 0.06);
+      }
+    }
+
+    &--icon {
+      padding: 0.5rem;
+      color: var(--white);
+      background-color: transparent;
+
+      &:focus,
+      &:hover {
+        color: var(--white-rich);
+      }
+
+      &:active {
+        background-color: hsla(0, 0%, 100%, 0.06);
       }
     }
 

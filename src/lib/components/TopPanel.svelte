@@ -1,12 +1,15 @@
 <script lang="ts">
-  import { setIsMenuOpen, store } from '$stores'
   import { IconMenu2 } from '@tabler/icons-svelte'
+
+  import { setIsMenuOpen, store } from '$stores'
+  import Button from './Button.svelte'
 </script>
 
 <header class="top-panel" inert={$store.isMenuOpen}>
-  <button class="top-panel__menu-button" on:click={() => setIsMenuOpen(true)}>
+  <Button element="button" variant="icon" on:click={() => setIsMenuOpen(true)}>
+    <span class="sr-only">Open menu</span>
     <IconMenu2 size={32} />
-  </button>
+  </Button>
   Top Panel
 </header>
 
@@ -17,20 +20,13 @@
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-
-    &__menu-button {
-      display: flex;
-      padding: 0.5rem;
-      border: none;
-      cursor: pointer;
-    }
   }
 
   @media (min-width: 50rem) {
     .top-panel {
       grid-column: 2/3;
 
-      &__menu-button {
+      :global(.button) {
         display: none;
       }
     }

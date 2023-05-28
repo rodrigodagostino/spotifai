@@ -7,6 +7,7 @@
   import { page } from '$app/stores'
   import { setIsMenuOpen, store } from '$stores'
   import SpotifyLogo from './SpotifyLogo.svelte'
+  import Button from './Button.svelte'
 
   beforeNavigate(() => setIsMenuOpen(false))
 
@@ -37,9 +38,10 @@
 >
   <div class="side-panel__header">
     <SpotifyLogo />
-    <button class="side-panel__close-button" on:click={() => setIsMenuOpen(false)}>
+    <Button element="button" variant="icon" on:click={() => setIsMenuOpen(false)}>
+      <span class="sr-only">Close menu</span>
       <IconX size={32} />
-    </button>
+    </Button>
   </div>
   <ul class="side-panel__menu">
     {#each menuItems as item}
@@ -85,13 +87,6 @@
 
     :global(.spotify-logo) {
       height: 2.25rem;
-    }
-
-    &__close-button {
-      display: flex;
-      padding: 0.5rem;
-      border: none;
-      cursor: pointer;
     }
 
     &__menu {
@@ -148,7 +143,7 @@
       transform: initial;
       opacity: initial;
 
-      &__close-button {
+      :global(.button) {
         display: none;
       }
     }
