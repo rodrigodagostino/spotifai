@@ -1,5 +1,13 @@
 <script>
-  import { store } from '$stores'
+  import { onMount } from 'svelte'
+  import { setIsMenuOpen, store } from '$stores'
+
+  onMount(() => {
+    const resizeObserver = new ResizeObserver(() => $store.isMenuOpen && setIsMenuOpen(false))
+    resizeObserver.observe(document.body)
+
+    return () => resizeObserver.unobserve(document.body)
+  })
 </script>
 
 <svelte:head>
