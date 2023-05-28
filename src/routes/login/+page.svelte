@@ -22,7 +22,12 @@
 <style lang="scss">
   :global(.page__inner) {
     grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr !important;
     padding: 0 !important;
+  }
+
+  :global(.page-main) {
+    grid-column: 1/-1 !important;
   }
 
   .login {

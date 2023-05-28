@@ -1,5 +1,16 @@
+<script>
+  import { store } from '$stores'
+</script>
+
 <svelte:head>
   <title>Spotifai</title>
+  {#if $store.isMenuOpen}
+    <style>
+      body {
+        overflow: hidden;
+      }
+    </style>
+  {/if}
 </svelte:head>
 
 <div class="home">
@@ -8,6 +19,3 @@
     <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation.</p>
   </div>
 </div>
-
-<style lang="scss">
-</style>

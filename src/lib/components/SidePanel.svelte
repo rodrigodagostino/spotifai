@@ -1,9 +1,14 @@
 <script lang="ts">
-  import { type Icon, IconHome, IconSearch, IconPlaylist } from '@tabler/icons-svelte'
+  import { type Icon, IconHome, IconSearch, IconPlaylist, IconX } from '@tabler/icons-svelte'
 
   import type { ComponentType } from 'svelte'
-  import SpotifyLogo from './SpotifyLogo.svelte'
+  import { browser } from '$app/environment'
+  import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
+  import { setIsMenuOpen, store } from '$stores'
+  import SpotifyLogo from './SpotifyLogo.svelte'
+
+  beforeNavigate(() => setIsMenuOpen(false))
 
   const menuItems: { path: string; label: string; icon: ComponentType<Icon> }[] = [
     {
@@ -24,8 +29,18 @@
   ]
 </script>
 
-<nav class="side-panel" aria-label="Main">
-  <SpotifyLogo />
+<nav
+  class="side-panel"
+  aria-label="Main"
+  aria-hidden={!$store.isMenuOpen}
+  inert={browser && document.body.clientWidth < 800 && !$store.isMenuOpen}
+>
+  <div class="side-panel__header">
+    <SpotifyLogo />
+    <button class="side-panel__close-button" on:click={() => setIsMenuOpen(false)}>
+      <IconX size={32} />
+    </button>
+  </div>
   <ul class="side-panel__menu">
     {#each menuItems as item}
       <li class="side-panel__menu-item">
@@ -41,15 +56,42 @@
     {/each}
   </ul>
 </nav>
+<div class="overlay" aria-hidden={!$store.isMenuOpen} on:click={() => setIsMenuOpen(false)} />
 
 <style lang="scss">
   .side-panel {
+    grid-row: 1/3;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0 0.5rem 0.5rem 0;
     background-color: var(--gray-950);
+    position: fixed;
+    left: 0;
+    width: 20rem;
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0;
+    transition: transform 0.24s, opacity 0.24s;
+    z-index: 100;
+
+    &[aria-hidden='false'] {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
     :global(.spotify-logo) {
       height: 2.25rem;
+    }
+
+    &__close-button {
+      display: flex;
+      padding: 0.5rem;
+      border: none;
+      cursor: pointer;
     }
 
     &__menu {
@@ -78,6 +120,36 @@
       :global(.tabler-icon) {
         width: 1.75rem;
         height: 1.75rem;
+      }
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 99;
+    transition: opacity 0.24s, visibility 0s 0.24s;
+
+    &[aria-hidden='false'] {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.24s, visibility 0s;
+    }
+  }
+
+  @media (min-width: 50rem) {
+    .side-panel {
+      width: auto;
+      position: initial;
+      border-radius: 0.5rem;
+      transform: initial;
+      opacity: initial;
+
+      &__close-button {
+        display: none;
       }
     }
   }
