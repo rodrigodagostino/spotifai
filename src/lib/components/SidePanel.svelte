@@ -105,6 +105,7 @@
       font-weight: 500;
       color: var(--gray-300);
       text-decoration: none;
+      transition: color 0.24s;
 
       &[aria-current='page'],
       &:focus,
