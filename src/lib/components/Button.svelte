@@ -67,6 +67,11 @@
       outline: 3px solid currentColor;
     }
 
+    :global(img) {
+      max-height: 1.75rem;
+      border-radius: 1rem;
+    }
+
     &--primary-solid {
       color: var(--black);
       background-color: var(--spotify-background);

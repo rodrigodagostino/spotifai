@@ -1,16 +1,20 @@
 <script lang="ts">
   import { IconMenu2 } from '@tabler/icons-svelte'
 
+  import { page } from '$app/stores'
   import { setIsMenuOpen, store } from '$stores'
   import Button from './Button.svelte'
+  import TopPanelProfile from './TopPanelProfile.svelte'
+
+  $: user = $page.data.user
 </script>
 
 <header class="top-panel" inert={$store.isMenuOpen}>
   <Button element="button" variant="icon" on:click={() => setIsMenuOpen(true)}>
-    <span class="sr-only">Open menu</span>
+    <span class="sr-only">{$store.isMenuOpen ? 'Close menu' : 'Open menu'}</span>
     <IconMenu2 size={32} />
   </Button>
-  Top Panel
+  <TopPanelProfile {user} />
 </header>
 
 <style lang="scss">

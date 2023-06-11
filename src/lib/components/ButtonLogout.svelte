@@ -16,5 +16,14 @@
     if (response.ok) invalidateAll()
   }}
 >
-  <button>Logout</button>
+  <button class="button" type="submit">Logout</button>
 </form>
+
+<style lang="scss">
+  button {
+    width: 100%;
+    border: none;
+    text-align: initial;
+    cursor: pointer;
+  }
+</style>
