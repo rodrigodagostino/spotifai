@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { LayoutData } from './$types'
+  import { page } from '$app/stores'
   import { store } from '$stores'
   import SidePanel from '$components/SidePanel.svelte'
   import TopPanel from '$components/TopPanel.svelte'
@@ -9,6 +10,10 @@
 
   $: user = data.user
 </script>
+
+<svelte:head>
+  <title>{$page.data.title ? `Spotifai – ${$page.data.title}` : 'Spotifai'}</title>
+</svelte:head>
 
 <div class="page__inner">
   {#if user}
