@@ -58,7 +58,9 @@
     {/each}
   </ul>
 </nav>
-<div class="overlay" aria-hidden={!$store.isMenuOpen} on:click={() => setIsMenuOpen(false)} />
+{#if $store.isMenuOpen}
+  <div class="overlay" aria-hidden={!$store.isMenuOpen} on:click={() => setIsMenuOpen(false)} />
+{/if}
 
 <style lang="scss">
   .side-panel {

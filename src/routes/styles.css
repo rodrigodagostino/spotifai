@@ -190,3 +190,7 @@ body {
   white-space: nowrap;
   border-width: 0;
 }
+
+#nprogress .bar {
+  background: var(--spotify-background) !important;
+}

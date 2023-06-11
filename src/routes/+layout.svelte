@@ -1,5 +1,9 @@
 <script lang="ts">
+  import NProgress from 'nprogress'
+  import 'nprogress/nprogress.css'
+
   import type { LayoutData } from './$types'
+  import { afterNavigate, beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
   import { store } from '$stores'
   import SidePanel from '$components/SidePanel.svelte'
@@ -10,6 +14,16 @@
   export let data: LayoutData
 
   $: user = data.user
+
+  NProgress.configure({ showSpinner: false })
+
+  beforeNavigate(() => {
+    NProgress.start()
+  })
+
+  afterNavigate(() => {
+    NProgress.done()
+  })
 </script>
 
 <svelte:head>

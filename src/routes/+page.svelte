@@ -11,7 +11,6 @@
 </script>
 
 <svelte:head>
-  <title>Spotifai</title>
   {#if $store.isMenuOpen}
     <style>
       body {
