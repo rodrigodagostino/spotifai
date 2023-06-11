@@ -64,7 +64,7 @@
     cursor: pointer;
 
     &:focus-visible {
-      outline: 3px solid currentColor;
+      outline: 3px solid var(--white-rich);
     }
 
     :global(img) {

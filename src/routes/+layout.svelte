@@ -4,6 +4,7 @@
   import { store } from '$stores'
   import SidePanel from '$components/SidePanel.svelte'
   import TopPanel from '$components/TopPanel.svelte'
+  import Button from '$components/Button.svelte'
   import './styles.css'
 
   export let data: LayoutData
@@ -14,6 +15,12 @@
 <svelte:head>
   <title>{$page.data.title ? `Spotifai – ${$page.data.title}` : 'Spotifai'}</title>
 </svelte:head>
+
+{#if user}
+  <Button element="a" href="#main" class="button--skip-to-content" variant="primary-solid">
+    Skip to content
+  </Button>
+{/if}
 
 <div class="page__inner">
   {#if user}
@@ -26,6 +33,17 @@
 </div>
 
 <style lang="scss">
+  :global(.button--skip-to-content) {
+    position: absolute;
+    top: -100%;
+    left: 0.75rem;
+    z-index: 200;
+
+    &:focus {
+      top: 0.75rem;
+    }
+  }
+
   .page__inner {
     display: grid;
     grid-template-columns: 1fr;
