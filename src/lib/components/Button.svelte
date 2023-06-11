@@ -58,7 +58,7 @@
     border-radius: 2em;
     outline: 3px solid transparent;
     font-family: var(--font-main);
-    font-weight: 600;
+    font-weight: 500;
     text-decoration: none;
     transition: background-color 0.24s, color 0.24s, outline 0.24s;
     cursor: pointer;
