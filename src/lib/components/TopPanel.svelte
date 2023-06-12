@@ -24,14 +24,35 @@
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+    padding: 0 1rem 0 0;
+  }
+
+  :global(.no-js) {
+    .top-panel {
+      justify-content: center;
+      padding: 0;
+
+      & > :global(.button) {
+        display: none;
+      }
+    }
   }
 
   @media (min-width: 50rem) {
     .top-panel {
       grid-column: 2/3;
+      justify-content: end;
+      padding: 0 1rem;
 
-      :global(.button) {
+      & > :global(.button) {
         display: none;
+      }
+    }
+
+    :global(.no-js) {
+      .top-panel {
+        justify-content: end;
+        padding: 0 1rem;
       }
     }
   }

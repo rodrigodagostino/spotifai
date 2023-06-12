@@ -59,7 +59,11 @@
   </ul>
 </nav>
 {#if $store.isMenuOpen}
-  <div class="overlay" aria-hidden={!$store.isMenuOpen} on:click={() => setIsMenuOpen(false)} />
+  <div
+    class="side-panel__overlay"
+    aria-hidden={!$store.isMenuOpen}
+    on:click={() => setIsMenuOpen(false)}
+  />
 {/if}
 
 <style lang="scss">
@@ -120,25 +124,41 @@
         height: 1.75rem;
       }
     }
-  }
 
-  .overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.2);
-    opacity: 0;
-    visibility: hidden;
-    z-index: 99;
-    transition: opacity 0.24s, visibility 0s 0.24s;
+    &__overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 99;
+      transition: opacity 0.24s, visibility 0s 0.24s;
 
-    &[aria-hidden='false'] {
-      opacity: 1;
-      visibility: visible;
-      transition: opacity 0.24s, visibility 0s;
+      &[aria-hidden='false'] {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.24s, visibility 0s;
+      }
     }
   }
 
-  @media (min-width: 50rem) {
+  @media (max-width: 49.9375em) {
+    :global(.no-js) {
+      .side-panel {
+        width: auto;
+        position: initial;
+        border-radius: 0.5rem;
+        transform: initial;
+        opacity: initial;
+
+        :global(.button) {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 50em) {
     .side-panel {
       width: auto;
       position: initial;

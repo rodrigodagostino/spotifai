@@ -68,6 +68,7 @@
 
   .page-main {
     grid-column: 1/-1;
+    padding: 1rem;
   }
 
   @media (min-width: 50rem) {

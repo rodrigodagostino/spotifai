@@ -1,7 +1,6 @@
 <script lang="ts">
   import { IconExternalLink } from '@tabler/icons-svelte'
 
-  import { fade } from 'svelte/transition'
   import type { PageData } from '../../routes/$types'
   import Button from './Button.svelte'
   import ButtonLogout from './ButtonLogout.svelte'
@@ -19,19 +18,19 @@
     {user?.display_name}
     <span class="sr-only">{isMenuExpanded ? 'Close profile menu' : 'Open profile menu'}</span>
   </Button>
+  <nav class="top-panel-profile__menu" aria-label="Profile" aria-hidden={!isMenuExpanded}>
+    <ul>
+      <li>
+        <a href={user?.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+          View on Spotify
+          <IconExternalLink size={14} />
+        </a>
+      </li>
+      <li><a href="/profile">View profile</a></li>
+      <li><ButtonLogout /></li>
+    </ul>
+  </nav>
   {#if isMenuExpanded}
-    <nav class="top-panel-profile__menu" aria-label="Profile" transition:fade={{ duration: 160 }}>
-      <ul>
-        <li>
-          <a href={user?.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-            View on Spotify
-            <IconExternalLink size={14} />
-          </a>
-        </li>
-        <li><a href="/profile">View profile</a></li>
-        <li><ButtonLogout /></li>
-      </ul>
-    </nav>
     <div
       class="top-panel-profile__overlay"
       aria-hidden={isMenuExpanded}
@@ -45,17 +44,27 @@
     position: relative;
 
     :global(.button) {
+      position: relative;
       z-index: 10;
     }
 
     &__menu {
       position: absolute;
-      top: 100%;
+      top: calc(100% + 0.5rem);
       right: 0;
       padding: 0.25rem;
       border-radius: 0.25rem;
       background-color: var(--gray-950);
+      opacity: 0;
+      visibility: hidden;
       z-index: 10;
+      transition: opacity 0.16s, visibility 0s 0.16s;
+
+      &[aria-hidden='false'] {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.16s, visibility 0s;
+      }
 
       ul {
         list-style: none;
@@ -69,7 +78,7 @@
       }
 
       a,
-      :global(button) {
+      :global(.button) {
         display: block;
         padding: 0.5rem 0.75rem;
         border-radius: 0.125rem;
@@ -86,6 +95,40 @@
     &__overlay {
       position: fixed;
       inset: 0;
+    }
+  }
+
+  :global(.no-js) {
+    .top-panel-profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+
+      &__menu {
+        position: initial;
+        opacity: initial;
+        visibility: initial;
+
+        ul {
+          display: flex;
+        }
+
+        li {
+          &:last-child {
+            border-top: none;
+            border-left: 1px solid var(--gray-800);
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 50rem) {
+    :global(.no-js) {
+      .top-panel-profile {
+        flex-direction: row;
+      }
     }
   }
 </style>
