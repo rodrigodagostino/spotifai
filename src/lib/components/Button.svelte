@@ -61,7 +61,6 @@
     font-weight: 500;
     text-decoration: none;
     transition: background-color 0.24s, color 0.24s, outline 0.24s;
-    cursor: pointer;
 
     &:focus-visible {
       outline: 3px solid var(--white-rich);
