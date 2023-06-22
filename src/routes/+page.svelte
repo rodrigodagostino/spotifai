@@ -1,6 +1,11 @@
-<script>
+<script lang="ts">
+  import type { PageData } from './$types'
   import { onMount } from 'svelte'
   import { setIsMenuOpen, store } from '$stores'
+
+  export let data: PageData
+
+  $: console.log(data)
 
   onMount(() => {
     const resizeObserver = new ResizeObserver(() => $store.isMenuOpen && setIsMenuOpen(false))
