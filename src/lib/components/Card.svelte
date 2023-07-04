@@ -67,6 +67,7 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
       font-size: 1rem;
+      font-weight: 600;
 
       a {
         text-decoration: none;
