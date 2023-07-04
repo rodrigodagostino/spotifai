@@ -69,6 +69,8 @@
   .page-main {
     grid-column: 1/-1;
     padding: 1rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+    background-color: var(--gray-950);
   }
 
   @media (min-width: 50rem) {

@@ -42,7 +42,9 @@
     .top-panel {
       grid-column: 2/3;
       justify-content: end;
-      padding: 0 1rem;
+      padding: 1rem;
+      border-radius: 0.5rem 0.5rem 0 0;
+      background-color: var(--gray-950);
 
       & > :global(.button) {
         display: none;
