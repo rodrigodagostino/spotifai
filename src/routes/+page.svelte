@@ -2,7 +2,7 @@
   import type { PageData } from './$types'
   import { onMount } from 'svelte'
   import { setIsMenuOpen, store } from '$stores'
-  import Button from '$components/Button.svelte'
+  import Card from '$components/Card.svelte'
 
   export let data: PageData
 
@@ -74,15 +74,7 @@
         </header>
         <div class="home__section-content">
           {#each section.items as item}
-            <div class="home__section-item">
-              <img class="home__section-item__image" src={item.images[0].url} alt="" />
-              <div class="home__section-item__info">
-                <h3 class="home__section-item__title">{item.name}</h3>
-                {#if item.description}
-                  <p class="home__section-item__description">{item.description}</p>
-                {/if}
-              </div>
-            </div>
+            <Card {item} />
           {/each}
         </div>
       </section>
@@ -114,40 +106,6 @@
       display: grid;
       grid-template-columns: 1fr;
       grid-gap: 1.25rem;
-    }
-
-    &__section-item {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      background-color: var(--gray-900);
-      transition: background-color 0.24s;
-
-      &:focus,
-      &:hover {
-        background-color: var(--gray-800);
-      }
-
-      &__image {
-        border-radius: 0.25rem;
-      }
-
-      &__title {
-        font-size: 1rem;
-      }
-
-      &__description {
-        margin-top: 0.25rem;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        font-size: 0.8125rem;
-        color: var(--gray-300);
-      }
     }
   }
 
