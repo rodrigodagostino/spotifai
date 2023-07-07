@@ -9,6 +9,7 @@
   export let data: PageData
 
   $: album = data.album
+  $: color = data.color
 
   const getDurationFromMs = (ms: number) => {
     const minutes = Math.floor(ms / 60000)
@@ -20,7 +21,7 @@
 <ItemPage
   title={album.name}
   type={startCase(camelCase(album.album_type))}
-  color={'crimson'}
+  {color}
   image={album.images.length ? album.images[0].url : undefined}
 >
   <p class="album__meta" slot="meta">
