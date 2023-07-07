@@ -40,9 +40,10 @@
 
   @media (min-width: 50rem) {
     .top-panel {
+      height: var(--top-panel-height);
       grid-column: 2/3;
+      grid-row: 1/2;
       justify-content: end;
-      padding: 1rem;
       border-radius: 0.5rem 0.5rem 0 0;
       background-color: var(--gray-950);
 

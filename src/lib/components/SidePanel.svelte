@@ -68,7 +68,7 @@
 
 <style lang="scss">
   .side-panel {
-    grid-row: 1/3;
+    grid-row: 1/2;
     padding: 1rem;
     border-radius: 0 0.5rem 0.5rem 0;
     background-color: var(--gray-950);

@@ -68,8 +68,9 @@
 
   .page-main {
     grid-column: 1/-1;
-    padding: 1rem;
-    border-radius: 0 0 0.5rem 0.5rem;
+    grid-row: 1/3;
+    padding: var(--top-panel-height) 1.5rem 1.5rem;
+    border-radius: 0.5rem;
     background-color: var(--gray-950);
   }
 
