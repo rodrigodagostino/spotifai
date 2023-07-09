@@ -9,7 +9,7 @@
 </script>
 
 <div class="card">
-  {#if item.images?.length}
+  {#if item.images?.length > 0}
     <img
       class="card__image"
       src={item.images[0].url}

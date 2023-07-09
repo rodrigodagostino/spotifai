@@ -1,14 +1,14 @@
 <script lang="ts">
   import { IconMusic } from '@tabler/icons-svelte'
 
-  export let color: string | null
   export let image: string | undefined
-  export let title: string
+  export let color: string | null
   export let type: string | undefined
+  export let title: string
 </script>
 
-<div class="item-page">
-  <header class="item-page__header" style="background-color: {color}">
+<div class="item-page" style="background-color: {color}">
+  <header class="item-page__header">
     {#if image}
       <img class="item-page__image" src={image} alt={title} loading="lazy" />
     {:else}
@@ -23,7 +23,6 @@
   </header>
   <div class="item-page__content">
     <slot />
-    <div class="item-page__content__background-color" style="background-color: {color}" />
     <div class="item-page__content__background-gradient" />
   </div>
 </div>
@@ -34,11 +33,13 @@
 
     &__header {
       display: flex;
-      align-items: end;
+      flex-direction: column;
+      align-items: center;
       gap: 1.5rem;
-      padding: var(--top-panel-height) 1.5rem 1.5rem;
+      padding: 2rem 1.5rem 1.5rem;
       border-radius: 0.5rem 0.5rem 0 0;
       position: relative;
+      text-align: center;
 
       & > * {
         position: relative;
@@ -48,7 +49,10 @@
       &__background-gradient {
         position: absolute;
         inset: 0;
-        background-image: linear-gradient(transparent 0, rgba(0, 0, 0, 0.5) 100%),
+        background-image: linear-gradient(
+            transparent var(--top-panel-height),
+            rgba(0, 0, 0, 0.5) 100%
+          ),
           var(--background-noise);
         z-index: 0;
       }
@@ -60,20 +64,14 @@
       box-shadow: 0 0.25rem 3.75rem rgba(0, 0, 0, 0.5);
     }
 
-    &__info {
-    }
-
     &__type {
       font-size: 0.875rem;
+      margin-bottom: 1rem;
     }
 
     &__title {
       font-size: 3.5rem;
-      line-height: 1.24;
-    }
-
-    :global(.album__meta) {
-      margin-top: 1rem;
+      line-height: 1;
     }
 
     &__content {
@@ -85,25 +83,25 @@
         z-index: 10;
       }
 
-      &__background-color,
       &__background-gradient {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 14.5rem;
-        z-index: 0;
-      }
-
-      &__background-gradient {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.6) 0, var(--gray-950) 100%),
+        inset: 0;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.6) 0, var(--gray-950) 16rem),
           var(--background-noise);
+        z-index: 0;
       }
     }
   }
 
   @media (min-width: 50em) {
     .item-page {
+      &__header {
+        flex-direction: initial;
+        align-items: end;
+        padding-top: var(--top-panel-height);
+        text-align: initial;
+      }
+
       &__title {
         font-size: 6rem;
       }

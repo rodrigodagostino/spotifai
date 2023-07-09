@@ -31,6 +31,10 @@
     padding: 0 !important;
   }
 
+  :global(.page-main__inner) {
+    padding: 0 !important;
+  }
+
   .login {
     min-height: 100vh;
     padding-inline: 1.25rem;

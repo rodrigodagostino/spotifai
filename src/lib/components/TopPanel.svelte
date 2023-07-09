@@ -45,7 +45,6 @@
       grid-row: 1/2;
       justify-content: end;
       border-radius: 0.5rem 0.5rem 0 0;
-      background-color: var(--gray-950);
 
       & > :global(.button) {
         display: none;

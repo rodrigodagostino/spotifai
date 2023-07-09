@@ -42,7 +42,9 @@
     <SidePanel />
   {/if}
   <main class="page-main" id="main" inert={$store.isMenuOpen}>
-    <slot />
+    <div class="page-main__inner">
+      <slot />
+    </div>
   </main>
 </div>
 
@@ -59,6 +61,7 @@
   }
 
   .page__inner {
+    height: 100vh;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
@@ -68,10 +71,18 @@
 
   .page-main {
     grid-column: 1/-1;
-    grid-row: 1/3;
-    padding: var(--top-panel-height) 1.5rem 1.5rem;
     border-radius: 0.5rem;
     background-color: var(--gray-950);
+    position: relative;
+    overflow: hidden;
+
+    &__inner {
+      height: 100%;
+      padding: var(--top-panel-height) 1.5rem 1.5rem;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      scrollbar-width: thin;
+    }
   }
 
   @media (min-width: 50rem) {
@@ -81,6 +92,7 @@
 
     .page-main {
       grid-column: 2/3;
+      grid-row: 1/3;
     }
   }
 

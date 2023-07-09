@@ -13,10 +13,10 @@
 </script>
 
 <ItemPage
-  title={album.name}
-  type={startCase(camelCase(album.album_type))}
+  image={album.images.length > 0 ? album.images[0].url : undefined}
   {color}
-  image={album.images.length ? album.images[0].url : undefined}
+  type={startCase(camelCase(album.album_type))}
+  title={album.name}
 >
   <p class="album__meta" slot="meta">
     <span class="album__artists">{album.artists.map((artist) => artist.name).join(', ')}</span>
@@ -41,6 +41,8 @@
   .album {
     &__meta {
       display: flex;
+      justify-content: center;
+      margin-top: 1rem;
 
       * + * {
         &::before {
@@ -61,6 +63,15 @@
 
     &__copyright {
       font-size: 0.75rem;
+    }
+  }
+
+  @media (min-width: 50rem) {
+    .album {
+      &__meta {
+        justify-content: initial;
+        margin-top: 2rem;
+      }
     }
   }
 </style>
