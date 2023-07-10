@@ -7,10 +7,9 @@
     IconVolume3,
   } from '@tabler/icons-svelte'
 
-  import { store } from '$stores'
+  import { setPaused, store } from '$stores'
   import Button from './Button.svelte'
 
-  let paused: boolean = true
   let currentTime: number = 0
   let duration: number = 0
   let volume: number = 0.5
@@ -41,7 +40,7 @@
     <div class="player__column">
       <audio
         src={$store.activeTrack?.preview_url}
-        bind:paused
+        bind:paused={$store.paused}
         bind:currentTime
         bind:duration
         bind:volume
@@ -50,10 +49,10 @@
         <Button
           element="button"
           variant="icon-solid"
-          aria-label={paused ? 'Play song' : 'Pause song'}
-          on:click={() => (paused ? (paused = false) : (paused = true))}
+          aria-label={$store.paused ? 'Play song' : 'Pause song'}
+          on:click={() => ($store.paused ? setPaused(false) : setPaused(true))}
         >
-          {#if paused}
+          {#if $store.paused}
             <IconPlayerPlayFilled size={18} />
           {:else}
             <IconPlayerPauseFilled size={18} />

@@ -3,13 +3,13 @@ import { writable } from 'svelte/store'
 interface IStore {
   isMenuOpen: boolean
   activeTrack: SpotifyApi.TrackObjectFull | SpotifyApi.TrackObjectSimplified | null
-  playerStatus: 'idle' | 'playing' | 'paused'
+  paused: boolean
 }
 
 export const store = writable<IStore>({
   isMenuOpen: false,
   activeTrack: null,
-  playerStatus: 'idle',
+  paused: true,
 })
 
 export const setIsMenuOpen = (value: IStore['isMenuOpen']) => {
@@ -23,13 +23,14 @@ export const setActiveTrack = (value: IStore['activeTrack']) => {
   store.update((state) => ({
     ...state,
     activeTrack: value,
-    playerStatus: 'idle',
+    paused: true,
   }))
+  setTimeout(() => setPaused(false), 0)
 }
 
-export const setPlayerStatus = (value: IStore['playerStatus']) => {
+export const setPaused = (value: IStore['paused']) => {
   store.update((state) => ({
     ...state,
-    playerStatus: value,
+    paused: value,
   }))
 }

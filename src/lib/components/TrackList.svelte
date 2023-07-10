@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { IconClock, IconPlayerPlayFilled } from '@tabler/icons-svelte'
+  import { IconClock, IconPlayerPauseFilled, IconPlayerPlayFilled } from '@tabler/icons-svelte'
 
   import Button from './Button.svelte'
-  import { setActiveTrack, store } from '$stores'
+  import { setActiveTrack, setPaused, store } from '$stores'
   import msToTime from './helpers/ms-to-time'
+  import playingAnimation from '$assets/images/playing-animation.gif'
 
   export let tracks: SpotifyApi.TrackObjectFull[] | SpotifyApi.TrackObjectSimplified[]
 </script>
@@ -21,17 +22,33 @@
 </div>
 <ul class="track-list__tracks">
   {#each tracks as track}
-    <li class="track-list__track" class:is-active={track.id === $store.activeTrack?.id}>
+    <li
+      class="track-list__track"
+      class:is-active={track.id === $store.activeTrack?.id}
+      class:is-paused={track.id === $store.activeTrack?.id && $store.paused}
+    >
       <div class="track-list__track__column">
         <span class="track-list__track__number">{track.track_number}</span>
-        <Button
-          element="button"
-          variant="icon-ghost"
-          aria-label="Play {track.name}"
-          on:click={() => setActiveTrack(track)}
-        >
-          <IconPlayerPlayFilled size={16} />
-        </Button>
+        {#if track.id === $store.activeTrack?.id && !$store.paused}
+          <Button
+            element="button"
+            variant="icon-ghost"
+            aria-label="Pause {track.name}"
+            on:click={() => setPaused(true)}
+          >
+            <IconPlayerPauseFilled size={16} />
+          </Button>
+        {:else}
+          <Button
+            element="button"
+            variant="icon-ghost"
+            aria-label="Play {track.name}"
+            on:click={() => setActiveTrack(track)}
+          >
+            <IconPlayerPlayFilled size={16} />
+          </Button>
+        {/if}
+        <img class="track-list__track__animation" src={playingAnimation} alt="" />
       </div>
       <div class="track-list__track__column">
         <span class="track-list__track__name">
@@ -98,7 +115,6 @@
       padding: 0.25rem 1rem;
       border-radius: 0.25rem;
 
-      &:focus,
       &:focus-within,
       &:hover,
       &.is-active {
@@ -114,8 +130,40 @@
       }
 
       &.is-active {
-        .track-list__track__name {
-          color: var(--spotify-text);
+        &:not(:focus-within):not(:hover) {
+          .track-list__track {
+            &__number + :global(.button) {
+              display: none;
+            }
+          }
+
+          &:not(.is-paused) {
+            .track-list__track {
+              &__animation {
+                display: inline-block;
+              }
+            }
+          }
+        }
+
+        .track-list__track {
+          &__number {
+            color: var(--spotify-text);
+          }
+
+          &__name {
+            color: var(--spotify-text);
+          }
+        }
+      }
+
+      &.is-paused {
+        &:not(:focus-within):not(:hover) {
+          .track-list__track {
+            &__number {
+              opacity: 1;
+            }
+          }
         }
       }
 
@@ -141,6 +189,14 @@
           transform: translate(-40%, -50%);
           opacity: 0;
         }
+      }
+
+      &__animation {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
 
       &__explicit {
