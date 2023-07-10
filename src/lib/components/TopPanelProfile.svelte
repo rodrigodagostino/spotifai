@@ -11,7 +11,7 @@
 </script>
 
 <div class="top-panel-profile">
-  <Button element="button" variant="icon" on:click={() => (isMenuExpanded = !isMenuExpanded)}>
+  <Button element="button" variant="icon-ghost" on:click={() => (isMenuExpanded = !isMenuExpanded)}>
     {#if user?.images && user.images.length > 0}
       <img src={user.images[0].url} alt="" />
     {/if}
@@ -54,7 +54,7 @@
       right: 0;
       padding: 0.25rem;
       border-radius: 0.25rem;
-      background-color: var(--gray-950);
+      background-color: var(--gray-850);
       opacity: 0;
       visibility: hidden;
       z-index: 10;

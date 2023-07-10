@@ -38,7 +38,7 @@
 >
   <div class="side-panel__header">
     <SpotifyLogo />
-    <Button element="button" variant="icon" on:click={() => setIsMenuOpen(false)}>
+    <Button element="button" variant="icon-ghost" on:click={() => setIsMenuOpen(false)}>
       <span class="sr-only">Close menu</span>
       <IconX size={32} />
     </Button>

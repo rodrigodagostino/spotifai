@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { IconClock } from '@tabler/icons-svelte'
+  import { IconClock, IconPlayerPlayFilled } from '@tabler/icons-svelte'
 
+  import Button from './Button.svelte'
+  import { setActiveTrack, store } from '$stores'
   import msToTime from './helpers/ms-to-time'
 
   export let tracks: SpotifyApi.TrackObjectFull[] | SpotifyApi.TrackObjectSimplified[]
@@ -19,9 +21,17 @@
 </div>
 <ul class="track-list__tracks">
   {#each tracks as track}
-    <li class="track-list__track">
+    <li class="track-list__track" class:is-active={track.id === $store.activeTrack?.id}>
       <div class="track-list__track__column">
         <span class="track-list__track__number">{track.track_number}</span>
+        <Button
+          element="button"
+          variant="icon-ghost"
+          aria-label="Play {track.name}"
+          on:click={() => setActiveTrack(track)}
+        >
+          <IconPlayerPlayFilled size={16} />
+        </Button>
       </div>
       <div class="track-list__track__column">
         <span class="track-list__track__name">
@@ -30,11 +40,12 @@
             <span class="track-list__track__explicit">Explicit</span>
           {/if}
         </span>
-        <span class="track-list__track__artists">
-          {#each track.artists as artist}
+        <div class="track-list__track__artists">
+          {#each track.artists as artist, i}
             <a href="/artist/{artist.id}" class="track-list__track__artist">{artist.name}</a>
+            {#if i < track.artists.length - 1}<span>,&nbsp;</span>{/if}
           {/each}
-        </span>
+        </div>
       </div>
       <div class="track-list__track__column">
         <span class="track-list__track__duration">
@@ -49,8 +60,8 @@
   .track-list {
     &__labels {
       display: grid;
-      grid-template-columns: 1rem 4fr minmax(7.5rem, 1fr);
-      column-gap: 1rem;
+      grid-template-columns: 1rem 4fr auto;
+      column-gap: 1.25rem;
       align-items: center;
       padding: 0.5rem 1rem;
       margin-bottom: 1rem;
@@ -59,10 +70,11 @@
       &__column {
         display: flex;
         flex-direction: column;
+        width: 100%;
 
         &:first-child,
         &:last-child {
-          justify-self: end;
+          align-items: end;
         }
       }
 
@@ -80,29 +92,55 @@
 
     &__track {
       display: grid;
-      grid-template-columns: 1rem 4fr minmax(7.5rem, 1fr);
-      column-gap: 1rem;
+      grid-template-columns: 1rem 4fr auto;
+      column-gap: 1.25rem;
       align-items: center;
       padding: 0.25rem 1rem;
       border-radius: 0.25rem;
 
       &:focus,
-      &:hover {
+      &:focus-within,
+      &:hover,
+      &.is-active {
         background-color: hsla(0, 0%, 100%, 0.1);
+
+        .track-list__track__number {
+          opacity: 0;
+
+          & + :global(.button) {
+            opacity: 1;
+          }
+        }
+      }
+
+      &.is-active {
+        .track-list__track__name {
+          color: var(--spotify-text);
+        }
       }
 
       &__column {
         display: flex;
         flex-direction: column;
+        width: 100%;
+        position: relative;
 
         &:first-child,
         &:last-child {
-          justify-self: end;
+          align-items: end;
         }
       }
 
       &__number {
         color: var(--gray-300);
+
+        & + :global(.button) {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-40%, -50%);
+          opacity: 0;
+        }
       }
 
       &__explicit {
@@ -117,6 +155,8 @@
       }
 
       &__artists {
+        display: flex;
+        flex-wrap: wrap;
         font-size: 0.8125rem;
         color: var(--gray-300);
       }
@@ -129,12 +169,6 @@
         &:hover {
           color: var(--white);
           text-decoration: underline;
-        }
-
-        & + & {
-          &::before {
-            content: ', ';
-          }
         }
       }
 

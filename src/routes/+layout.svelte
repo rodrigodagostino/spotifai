@@ -8,6 +8,7 @@
   import { store } from '$stores'
   import SidePanel from '$components/SidePanel.svelte'
   import TopPanel from '$components/TopPanel.svelte'
+  import BottomPanel from '$components/BottomPanel.svelte'
   import Button from '$components/Button.svelte'
   import './styles.css'
 
@@ -46,6 +47,9 @@
       <slot />
     </div>
   </main>
+  {#if user}
+    <BottomPanel />
+  {/if}
 </div>
 
 <style lang="scss">

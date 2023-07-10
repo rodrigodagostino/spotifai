@@ -117,7 +117,6 @@ hr {
 
 a {
   color: var(--white);
-  transition: color 0.24s, outline 0.24s;
   outline: 1px dotted transparent;
 }
 

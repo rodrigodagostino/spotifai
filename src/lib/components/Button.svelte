@@ -18,7 +18,8 @@
       | 'tertiary-solid'
       | 'tertiary-outline'
       | 'text'
-      | 'icon'
+      | 'icon-solid'
+      | 'icon-ghost'
     size?: 'small' | 'medium' | 'large'
   }
 
@@ -31,7 +32,8 @@
     | 'tertiary-solid'
     | 'tertiary-outline'
     | 'text'
-    | 'icon' = 'secondary-solid'
+    | 'icon-solid'
+    | 'icon-ghost' = 'secondary-solid'
   export let size: 'small' | 'medium' | 'large' = 'small'
 </script>
 
@@ -180,7 +182,22 @@
       }
     }
 
-    &--icon {
+    &--icon-solid {
+      padding: 0.5em;
+      color: var(--black);
+      background-color: var(--white);
+
+      &:focus,
+      &:hover {
+        background-color: var(--white-rich);
+      }
+
+      &:active {
+        background-color: var(--gray-200);
+      }
+    }
+
+    &--icon-ghost {
       padding: 0.5rem;
       color: var(--white);
       background-color: transparent;

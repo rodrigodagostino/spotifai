@@ -10,7 +10,7 @@
 </script>
 
 <header class="top-panel" inert={$store.isMenuOpen}>
-  <Button element="button" variant="icon" on:click={() => setIsMenuOpen(true)}>
+  <Button element="button" variant="icon-ghost" on:click={() => setIsMenuOpen(true)}>
     <span class="sr-only">{$store.isMenuOpen ? 'Close menu' : 'Open menu'}</span>
     <IconMenu2 size={32} />
   </Button>
@@ -24,13 +24,12 @@
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-    padding: 0 1rem 0 0;
+    z-index: 20;
   }
 
   :global(.no-js) {
     .top-panel {
       justify-content: center;
-      padding: 0;
 
       & > :global(.button) {
         display: none;
@@ -44,6 +43,7 @@
       grid-column: 2/3;
       grid-row: 1/2;
       justify-content: end;
+      padding-right: 1.5rem;
       border-radius: 0.5rem 0.5rem 0 0;
 
       & > :global(.button) {
