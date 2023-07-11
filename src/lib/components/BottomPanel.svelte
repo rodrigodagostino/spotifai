@@ -262,6 +262,12 @@
     }
   }
 
+  :global(.no-js) {
+    .bottom-panel {
+      display: none;
+    }
+  }
+
   @media (min-width: 50em) {
     .player {
       grid-template-columns: 3fr 4fr 3fr;

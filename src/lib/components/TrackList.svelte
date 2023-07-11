@@ -51,17 +51,20 @@
         <img class="track-list__track__animation" src={playingAnimation} alt="" />
       </div>
       <div class="track-list__track__column">
-        <span class="track-list__track__name">
-          {track.name}
-          {#if track.explicit}
-            <span class="track-list__track__explicit">Explicit</span>
-          {/if}
-        </span>
-        <div class="track-list__track__artists">
-          {#each track.artists as artist, i}
-            <a href="/artist/{artist.id}" class="track-list__track__artist">{artist.name}</a>
-            {#if i < track.artists.length - 1}<span>,&nbsp;</span>{/if}
-          {/each}
+        <audio class="track-list__track__player" src={track.preview_url} controls />
+        <div class="track-list__track__info">
+          <span class="track-list__track__name">
+            {track.name}
+            {#if track.explicit}
+              <span class="track-list__track__explicit">Explicit</span>
+            {/if}
+          </span>
+          <div class="track-list__track__artists">
+            {#each track.artists as artist, i}
+              <a href="/artist/{artist.id}" class="track-list__track__artist">{artist.name}</a>
+              {#if i < track.artists.length - 1}<span>,&nbsp;</span>{/if}
+            {/each}
+          </div>
         </div>
       </div>
       <div class="track-list__track__column">
@@ -109,7 +112,7 @@
 
     &__track {
       display: grid;
-      grid-template-columns: 1rem 4fr auto;
+      grid-template-columns: 1rem 4fr 2.125rem;
       column-gap: 1.25rem;
       align-items: center;
       padding: 0.25rem 1rem;
@@ -228,8 +231,41 @@
         }
       }
 
+      &__player {
+        display: none;
+      }
+
       &__duration {
         color: var(--gray-300);
+      }
+    }
+  }
+
+  :global(.no-js) {
+    .track-list {
+      &__track {
+        &:focus-within,
+        &:hover,
+        &.is-active {
+          .track-list__track__number {
+            opacity: 1;
+
+            & + :global(.button) {
+              opacity: 0;
+            }
+          }
+        }
+
+        &__column:nth-child(2) {
+          flex-direction: row;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        &__player {
+          display: initial;
+          max-width: 32%;
+        }
       }
     }
   }

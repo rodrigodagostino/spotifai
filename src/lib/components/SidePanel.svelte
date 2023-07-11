@@ -69,7 +69,7 @@
 <style lang="scss">
   .side-panel {
     grid-row: 1/2;
-    padding: 1rem;
+    padding: 1rem 1rem 1.5rem;
     border-radius: 0 0.5rem 0.5rem 0;
     background-color: var(--gray-950);
     position: fixed;
@@ -142,9 +142,25 @@
     }
   }
 
+  @media (max-width: 32.4375em) {
+    :global(.no-js) {
+      .side-panel {
+        &__menu-link {
+          :global(.tabler-icon) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
   @media (max-width: 49.9375em) {
     :global(.no-js) {
       .side-panel {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
         width: auto;
         position: initial;
         border-radius: 0.5rem;
@@ -153,6 +169,14 @@
 
         :global(.button) {
           display: none;
+        }
+
+        &__menu {
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 1rem;
+          margin-top: 0;
         }
       }
     }
