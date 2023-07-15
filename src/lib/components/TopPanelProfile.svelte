@@ -27,7 +27,7 @@
         </a>
       </li>
       <li><a href="/profile">View profile</a></li>
-      <li><ButtonLogout /></li>
+      <li><ButtonLogout variant="text" /></li>
     </ul>
   </nav>
   {#if isMenuExpanded}
@@ -44,8 +44,10 @@
     position: relative;
 
     :global(.button) {
+      width: 100%;
       position: relative;
       z-index: 10;
+      text-align: start;
     }
 
     &__menu {

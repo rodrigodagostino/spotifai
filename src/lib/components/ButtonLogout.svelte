@@ -1,5 +1,17 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation'
+  import Button from './Button.svelte'
+
+  export let variant:
+    | 'primary-solid'
+    | 'primary-outline'
+    | 'secondary-solid'
+    | 'secondary-outline'
+    | 'tertiary-solid'
+    | 'tertiary-outline'
+    | 'text'
+    | 'icon-solid'
+    | 'icon-ghost' = 'secondary-solid'
 </script>
 
 <form
@@ -16,14 +28,5 @@
     if (response.ok) invalidateAll()
   }}
 >
-  <button class="button" type="submit">Logout</button>
+  <Button element="button" type="submit" {variant}>Logout</Button>
 </form>
-
-<style lang="scss">
-  button {
-    width: 100%;
-    border: none;
-    text-align: initial;
-    cursor: pointer;
-  }
-</style>
