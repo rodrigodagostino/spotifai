@@ -81,6 +81,8 @@
     overflow: hidden;
 
     &__inner {
+      display: flex;
+      flex-direction: column;
       height: 100%;
       padding: var(--top-panel-height) 1.5rem 1.5rem;
       overflow-x: hidden;

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { IconMusic } from '@tabler/icons-svelte'
+  import { camelCase, startCase } from 'lodash'
 
   export let image: string | undefined
   export let color: string | null
@@ -15,8 +16,9 @@
       <div class="item-page__image-placeholder"><IconMusic size={80} /></div>
     {/if}
     <div class="item-page__info">
-      {#if type}<p class="item-page__type">{type}</p>{/if}
+      {#if type}<p class="item-page__type">{startCase(camelCase(type))}</p>{/if}
       <h1 class="item-page__title">{title}</h1>
+      <slot name="description" />
       <slot name="meta" />
     </div>
     <div class="item-page__header__background-gradient" />
@@ -29,7 +31,10 @@
 
 <style lang="scss">
   .item-page {
-    margin: calc(var(--top-panel-height) * -1) -1.5rem -1.5rem;
+    height: calc(100% + var(--top-panel-height) + 1.5rem);
+    margin: calc(var(--top-panel-height) * -1) -1.5rem;
+    display: flex;
+    flex-direction: column;
 
     &__header {
       display: flex;
@@ -58,10 +63,18 @@
       }
     }
 
-    &__image {
+    &__image,
+    &__image-placeholder {
+      flex-shrink: 0;
       width: 14.5rem;
       height: 14.5rem;
       box-shadow: 0 0.25rem 3.75rem rgba(0, 0, 0, 0.5);
+    }
+
+    &__image-placeholder {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     &__type {
@@ -75,6 +88,7 @@
     }
 
     &__content {
+      flex: 1;
       padding: 1.5rem;
       position: relative;
 

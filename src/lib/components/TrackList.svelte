@@ -7,6 +7,9 @@
   import playingAnimation from '$assets/images/playing-animation.gif'
 
   export let tracks: SpotifyApi.TrackObjectFull[] | SpotifyApi.TrackObjectSimplified[]
+  export let type:
+    | SpotifyApi.AlbumObjectSimplified['album_type']
+    | SpotifyApi.PlaylistBaseObject['type']
 </script>
 
 <div class="track-list__labels">
@@ -21,14 +24,16 @@
   </div>
 </div>
 <ul class="track-list__tracks">
-  {#each tracks as track}
+  {#each tracks as track, i}
     <li
       class="track-list__track"
       class:is-active={track.id === $store.activeTrack?.id}
       class:is-paused={track.id === $store.activeTrack?.id && $store.paused}
     >
       <div class="track-list__track__column">
-        <span class="track-list__track__number">{track.track_number}</span>
+        <span class="track-list__track__number">
+          {type === 'album' && track.track_number ? track.track_number : i + 1}
+        </span>
         {#if track.id === $store.activeTrack?.id && !$store.paused}
           <Button
             element="button"

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { camelCase, startCase } from 'lodash'
-
   import type { PageData } from './$types'
   import getCopyrightSymbol from '$components/helpers/copyright-symbol'
   import ItemPage from '$components/ItemPage.svelte'
@@ -15,7 +13,7 @@
 <ItemPage
   image={album.images.length > 0 ? album.images[0].url : undefined}
   {color}
-  type={startCase(camelCase(album.album_type))}
+  type={album.album_type}
   title={album.name}
 >
   <p class="album__meta" slot="meta">
@@ -26,7 +24,7 @@
       {album.total_tracks === 1 ? 'song' : 'songs'}
     </span>
   </p>
-  <TrackList tracks={album.tracks.items} />
+  <TrackList tracks={album.tracks.items} type={album.type} />
   <div class="album__credits">
     <p class="album__release-date">
       {new Date(album.release_date).toLocaleDateString('en', { dateStyle: 'medium' })}

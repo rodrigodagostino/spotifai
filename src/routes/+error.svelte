@@ -6,7 +6,7 @@
   import { IconExclamationCircle } from '@tabler/icons-svelte'
 
   let isRetrying = false
-  const retryRoutes = ['/album/[id]']
+  const retryRoutes = ['/album/[id]', '/playlist/[id]']
 </script>
 
 <svelte:head>
