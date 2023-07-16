@@ -67,6 +67,7 @@
           bind:value={currentTime}
           min="0"
           max={duration.toFixed(0)}
+          step="0.01"
         />
         <span class="player__duration">{duration ? formatTime(duration, 'duration') : '--:--'}</span
         >
