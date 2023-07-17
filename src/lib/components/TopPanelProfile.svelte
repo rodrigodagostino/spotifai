@@ -86,6 +86,7 @@
         border-radius: 0.125rem;
         font-size: 0.875rem;
         text-decoration: none;
+        white-space: nowrap;
 
         &:focus,
         &:hover {

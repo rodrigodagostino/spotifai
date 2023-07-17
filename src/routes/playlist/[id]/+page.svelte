@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { IconArrowLeft, IconArrowRight } from '@tabler/icons-svelte'
+
   import type { PageData } from './$types'
+  import { page } from '$app/stores'
   import ItemPage from '$components/ItemPage.svelte'
   import TrackList from '$components/TrackList.svelte'
   import Button from '$components/Button.svelte'
@@ -9,6 +12,7 @@
   $: playlist = data.playlist
   $: color = data.color
   $: tracks = data.playlist.tracks
+  $: currentPageNumber = $page.url.searchParams.get('page') || 1
 
   let filteredTracks: SpotifyApi.TrackObjectFull[]
   let isLoadingMore = false
@@ -81,6 +85,32 @@
         {/if}
       </div>
     {/if}
+    <div class="playlist__pagination">
+      {#if tracks.previous}
+        <Button
+          element="a"
+          href="{$page.url.pathname}?{new URLSearchParams({
+            page: `${Number(currentPageNumber) - 1}`,
+          }).toString()}"
+          variant="secondary-outline"
+        >
+          <IconArrowLeft size={24} />
+          Previous page
+        </Button>
+      {/if}
+      {#if tracks.next}
+        <Button
+          element="a"
+          href="{$page.url.pathname}?{new URLSearchParams({
+            page: `${Number(currentPageNumber) + 1}`,
+          }).toString()}"
+          variant="secondary-outline"
+        >
+          Next page
+          <IconArrowRight size={24} />
+        </Button>
+      {/if}
+    </div>
   {:else}
     <div class="playlist__no-tracks">
       <h2>No songs have been added to this playlist.</h2>
@@ -93,6 +123,18 @@
 </ItemPage>
 
 <style lang="scss">
+  :global(.no-js) {
+    .playlist {
+      &__load-more {
+        display: none;
+      }
+
+      &__pagination {
+        display: block;
+      }
+    }
+  }
+
   .playlist {
     &__description {
       margin-top: 1rem;
@@ -112,9 +154,14 @@
       }
     }
 
-    &__load-more {
+    &__load-more,
+    &__pagination {
       margin-top: 1.5rem;
       text-align: center;
+    }
+
+    &__pagination {
+      display: none;
     }
 
     &__loading-animation {
@@ -128,9 +175,9 @@
       &__dot-two,
       &__dot-three {
         display: inline-block;
-        width: 0.625rem;
-        height: 0.625rem;
-        border-radius: 0.5rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 0.25rem;
         background-color: var(--white);
         animation: loading-animation 1s infinite linear;
       }
