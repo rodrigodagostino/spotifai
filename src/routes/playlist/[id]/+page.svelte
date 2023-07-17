@@ -11,6 +11,7 @@
   $: tracks = data.playlist.tracks
 
   let filteredTracks: SpotifyApi.TrackObjectFull[]
+  let isLoadingMore = false
 
   $: {
     filteredTracks = []
@@ -22,6 +23,25 @@
   const formatFollowers = Intl.NumberFormat('en', {
     notation: 'compact',
   })
+
+  const loadMore = async () => {
+    if (!tracks.next) return
+
+    isLoadingMore = true
+    const response = await fetch(
+      tracks.next.replace('https://api.spotify.com/v1/', '/api/spotify/')
+    )
+    const responseJSON = await response.json()
+    if (response.ok) {
+      tracks = {
+        ...responseJSON,
+        items: [...tracks.items, ...responseJSON.items],
+      }
+    } else {
+      console.error(response.status, response.statusText)
+    }
+    isLoadingMore = false
+  }
 </script>
 
 <ItemPage
@@ -41,6 +61,26 @@
   </p>
   {#if tracks.items.length > 0}
     <TrackList tracks={filteredTracks} type={playlist.type} />
+    {#if tracks.next}
+      <div class="playlist__load-more">
+        {#if !isLoadingMore}
+          <Button
+            element="button"
+            variant="secondary-outline"
+            disabled={isLoadingMore}
+            on:click={loadMore}
+          >
+            Load more
+          </Button>
+        {:else}
+          <div class="playlist__loading-animation">
+            <span class="playlist__loading-animation__dot-one" />
+            <span class="playlist__loading-animation__dot-two" />
+            <span class="playlist__loading-animation__dot-three" />
+          </div>
+        {/if}
+      </div>
+    {/if}
   {:else}
     <div class="playlist__no-tracks">
       <h2>No songs have been added to this playlist.</h2>
@@ -69,6 +109,59 @@
           content: '•';
           margin: 0 0.325em;
         }
+      }
+    }
+
+    &__load-more {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    &__loading-animation {
+      height: 2.8125rem;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+
+      &__dot-one,
+      &__dot-two,
+      &__dot-three {
+        display: inline-block;
+        width: 0.625rem;
+        height: 0.625rem;
+        border-radius: 0.5rem;
+        background-color: var(--white);
+        animation: loading-animation 1s infinite linear;
+      }
+
+      &__dot-one {
+        animation-delay: 0s;
+      }
+
+      &__dot-two {
+        animation-delay: 0.1s;
+      }
+
+      &__dot-three {
+        animation-delay: 0.2s;
+      }
+    }
+
+    @keyframes loading-animation {
+      0% {
+        transform: translate3d(0, -1rem, 0);
+        opacity: 0;
+      }
+      25%,
+      50%,
+      75% {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate3d(0, 1rem, 0);
+        opacity: 0;
       }
     }
 
