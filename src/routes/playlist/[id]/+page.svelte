@@ -1,13 +1,15 @@
 <script lang="ts">
-  import { IconArrowLeft, IconArrowRight } from '@tabler/icons-svelte'
+  import { IconArrowLeft, IconArrowRight, IconHeart, IconHeartFilled } from '@tabler/icons-svelte'
 
   import type { PageData } from './$types'
+  import type { ActionData } from '../$types'
   import { page } from '$app/stores'
   import ItemPage from '$components/ItemPage.svelte'
   import TrackList from '$components/TrackList.svelte'
   import Button from '$components/Button.svelte'
 
   export let data: PageData
+  export let form: ActionData
 
   $: playlist = data.playlist
   $: color = data.color
@@ -64,6 +66,29 @@
       {playlist.tracks.total === 1 ? 'song' : 'songs'}
     </span>
   </p>
+  <div class="playlist__actions">
+    {#if data.user?.id === playlist.owner.id}
+      <Button element="a" variant="secondary-outline">Edit playlist</Button>
+    {:else if isFollowing !== null}
+      <form
+        class="playlist__follow-form"
+        method="POST"
+        action={`?/${isFollowing ? 'unfollowPlaylist' : 'followPlaylist'}`}
+      >
+        <Button element="button" type="submit" variant="icon-ghost">
+          {#if isFollowing}
+            <IconHeartFilled size={40} />
+          {:else}
+            <IconHeart size={40} />
+          {/if}
+          <span class="sr-only">
+            {isFollowing ? 'Unfollow' : 'Follow'}
+            {playlist.name} playlist
+          </span>
+        </Button>
+      </form>
+    {/if}
+  </div>
   {#if tracks.items.length > 0}
     <TrackList tracks={filteredTracks} type={playlist.type} />
     {#if tracks.next}
@@ -152,6 +177,16 @@
           content: '•';
           margin: 0 0.325em;
         }
+      }
+    }
+
+    &__actions {
+      margin-bottom: 0.5rem;
+    }
+
+    &__follow-form {
+      :global(.tabler-icon-heart-filled path) {
+        fill: var(--spotify-text);
       }
     }
 
