@@ -12,6 +12,7 @@
   $: playlist = data.playlist
   $: color = data.color
   $: tracks = data.playlist.tracks
+  $: isFollowing = data.isFollowing
   $: currentPageNumber = $page.url.searchParams.get('page') || 1
 
   let filteredTracks: SpotifyApi.TrackObjectFull[]
