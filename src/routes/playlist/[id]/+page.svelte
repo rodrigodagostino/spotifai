@@ -4,6 +4,7 @@
   import type { PageData } from './$types'
   import type { ActionData } from '../$types'
   import { page } from '$app/stores'
+  import { applyAction, enhance } from '$app/forms'
   import ItemPage from '$components/ItemPage.svelte'
   import TrackList from '$components/TrackList.svelte'
   import Button from '$components/Button.svelte'
@@ -18,6 +19,8 @@
   $: currentPageNumber = $page.url.searchParams.get('page') || 1
 
   let filteredTracks: SpotifyApi.TrackObjectFull[]
+  let followButton: Button<'button'>
+  let isPostingFollow = false
   let isLoadingMore = false
 
   $: {
@@ -74,8 +77,25 @@
         class="playlist__follow-form"
         method="POST"
         action={`?/${isFollowing ? 'unfollowPlaylist' : 'followPlaylist'}`}
+        use:enhance={() => {
+          isPostingFollow = true
+          return async ({ result }) => {
+            await applyAction(result)
+            followButton.focus()
+            followButton.contentEditable = false
+            if (result.type === 'success') {
+              isFollowing = !isFollowing
+            }
+          }
+        }}
       >
-        <Button element="button" type="submit" variant="icon-ghost">
+        <Button
+          bind:this={followButton}
+          element="button"
+          type="submit"
+          variant="icon-ghost"
+          disabled={isPostingFollow}
+        >
           {#if isFollowing}
             <IconHeartFilled size={40} />
           {:else}

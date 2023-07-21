@@ -35,10 +35,15 @@
     | 'icon-solid'
     | 'icon-ghost' = 'secondary-solid'
   export let size: 'small' | 'medium' | 'large' = 'small'
+
+  let buttonRef: HTMLAnchorElement | HTMLButtonElement
+
+  export const focus = () => buttonRef.focus()
 </script>
 
 <svelte:element
   this={element}
+  bind:this={buttonRef}
   {...$$restProps}
   class="button button--{variant} button--{size} {$$restProps.class ? $$restProps.class : ''}"
   on:click
