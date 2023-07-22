@@ -1,6 +1,6 @@
 import type { PageLoad } from './$types'
 import { error } from '@sveltejs/kit'
-import fetchRefresh from '$components/helpers/fetch-refresh'
+import fetchRefresh from '$helpers/fetch-refresh'
 
 export const load: PageLoad = async ({ fetch: _fetch, params, depends, route, url, parent }) => {
   depends(`app:${route.id}`)

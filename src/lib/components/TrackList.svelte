@@ -1,9 +1,9 @@
 <script lang="ts">
   import { IconClock, IconPlayerPauseFilled, IconPlayerPlayFilled } from '@tabler/icons-svelte'
 
-  import Button from './Button.svelte'
+  import Button from '$components/Button.svelte'
   import { setActiveTrack, setPaused, store } from '$stores'
-  import msToTime from './helpers/ms-to-time'
+  import msToTime from '$helpers/ms-to-time'
   import playingAnimation from '$assets/images/playing-animation.gif'
 
   export let tracks: SpotifyApi.TrackObjectFull[] | SpotifyApi.TrackObjectSimplified[]

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types'
-  import getCopyrightSymbol from '$components/helpers/copyright-symbol'
+  import getCopyrightSymbol from '$helpers/copyright-symbol'
   import ItemPage from '$components/ItemPage.svelte'
   import TrackList from '$components/TrackList.svelte'
 
