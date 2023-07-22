@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { IconMusic } from '@tabler/icons-svelte'
-  import { camelCase, startCase } from 'lodash'
+  import { IconMusic } from '@tabler/icons-svelte';
+  import { camelCase, startCase } from 'lodash';
 
-  export let image: string | undefined
-  export let color: string | null
-  export let type: string | undefined
-  export let title: string
+  export let image: string | undefined;
+  export let color: string | null;
+  export let type: string | undefined;
+  export let title: string;
 </script>
 
 <div class="item-page" style="background-color: {color}">

@@ -1,30 +1,30 @@
 <script lang="ts">
-  import NProgress from 'nprogress'
-  import 'nprogress/nprogress.css'
+  import NProgress from 'nprogress';
+  import 'nprogress/nprogress.css';
 
-  import type { LayoutData } from './$types'
-  import { afterNavigate, beforeNavigate } from '$app/navigation'
-  import { page } from '$app/stores'
-  import { store } from '$stores'
-  import SidePanel from '$components/SidePanel.svelte'
-  import TopPanel from '$components/TopPanel.svelte'
-  import BottomPanel from '$components/BottomPanel.svelte'
-  import Button from '$components/Button.svelte'
-  import './styles.css'
+  import type { LayoutData } from './$types';
+  import { afterNavigate, beforeNavigate } from '$app/navigation';
+  import { page } from '$app/stores';
+  import { navigation } from '$stores/navigation';
+  import SidePanel from '$components/SidePanel.svelte';
+  import TopPanel from '$components/TopPanel.svelte';
+  import BottomPanel from '$components/BottomPanel.svelte';
+  import Button from '$components/Button.svelte';
+  import './styles.css';
 
-  export let data: LayoutData
+  export let data: LayoutData;
 
-  $: user = data.user
+  $: user = data.user;
 
-  NProgress.configure({ showSpinner: false })
+  NProgress.configure({ showSpinner: false });
 
   beforeNavigate(() => {
-    NProgress.start()
-  })
+    NProgress.start();
+  });
 
   afterNavigate(() => {
-    NProgress.done()
-  })
+    NProgress.done();
+  });
 </script>
 
 <svelte:head>
@@ -42,7 +42,7 @@
     <TopPanel />
     <SidePanel />
   {/if}
-  <main class="page-main" id="main" inert={$store.isMenuOpen}>
+  <main class="page-main" id="main" inert={$navigation.isMenuOpen}>
     <div class="page-main__inner">
       <slot />
     </div>

@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { type Icon, IconHome, IconSearch, IconPlaylist, IconX } from '@tabler/icons-svelte'
+  import { type Icon, IconHome, IconSearch, IconPlaylist, IconX } from '@tabler/icons-svelte';
 
-  import type { ComponentType } from 'svelte'
-  import { browser } from '$app/environment'
-  import { beforeNavigate } from '$app/navigation'
-  import { page } from '$app/stores'
-  import { setIsMenuOpen, store } from '$stores'
-  import SpotifyLogo from './SpotifyLogo.svelte'
-  import Button from './Button.svelte'
+  import type { ComponentType } from 'svelte';
+  import { browser } from '$app/environment';
+  import { beforeNavigate } from '$app/navigation';
+  import { page } from '$app/stores';
+  import { setIsMenuOpen, navigation } from '$stores/navigation';
+  import SpotifyLogo from './SpotifyLogo.svelte';
+  import Button from './Button.svelte';
 
-  beforeNavigate(() => setIsMenuOpen(false))
+  beforeNavigate(() => setIsMenuOpen(false));
 
   const menuItems: { path: string; label: string; icon: ComponentType<Icon> }[] = [
     {
@@ -27,14 +27,14 @@
       label: 'Playlists',
       icon: IconPlaylist,
     },
-  ]
+  ];
 </script>
 
 <nav
   class="side-panel"
   aria-label="Main"
-  aria-hidden={!$store.isMenuOpen}
-  inert={browser && document.body.clientWidth < 800 && !$store.isMenuOpen}
+  aria-hidden={!$navigation.isMenuOpen}
+  inert={browser && document.body.clientWidth < 800 && !$navigation.isMenuOpen}
 >
   <div class="side-panel__header">
     <SpotifyLogo />
@@ -58,10 +58,10 @@
     {/each}
   </ul>
 </nav>
-{#if $store.isMenuOpen}
+{#if $navigation.isMenuOpen}
   <div
     class="side-panel__overlay"
-    aria-hidden={!$store.isMenuOpen}
+    aria-hidden={!$navigation.isMenuOpen}
     on:click={() => setIsMenuOpen(false)}
   />
 {/if}

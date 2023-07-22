@@ -5,42 +5,42 @@
     IconVolume,
     IconVolume2,
     IconVolume3,
-  } from '@tabler/icons-svelte'
+  } from '@tabler/icons-svelte';
 
-  import { setPaused, store } from '$stores'
-  import Button from './Button.svelte'
+  import { setPaused, navigation } from '$stores/navigation';
+  import Button from './Button.svelte';
 
-  let currentTime: number = 0
-  let duration: number = 0
-  let volume: number = 0.5
+  let currentTime: number = 0;
+  let duration: number = 0;
+  let volume: number = 0.5;
 
   function formatTime(time: number, type: 'time' | 'duration') {
-    if (isNaN(time)) return '...'
+    if (isNaN(time)) return '...';
 
-    const minutes = type === 'time' ? Math.floor(time / 60) : Math.round(time / 60)
-    const seconds = type === 'time' ? Math.floor(time % 60) : Math.round(time % 60)
+    const minutes = type === 'time' ? Math.floor(time / 60) : Math.round(time / 60);
+    const seconds = type === 'time' ? Math.floor(time % 60) : Math.round(time % 60);
 
-    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   }
 </script>
 
 <div class="bottom-panel">
   <div class="player">
     <div class="player__column">
-      {#if $store.activeTrack}
-        <span class="player__song-name">{$store.activeTrack?.name}</span>
+      {#if $navigation.activeTrack}
+        <span class="player__song-name">{$navigation.activeTrack?.name}</span>
         <div class="player__song-artists">
-          {#each $store.activeTrack?.artists as artist, i}
+          {#each $navigation.activeTrack?.artists as artist, i}
             <a class="player__song-artist" href="/artist/{artist.id}">{artist.name}</a>
-            {#if i < $store.activeTrack?.artists.length - 1}<span>,&nbsp;</span>{/if}
+            {#if i < $navigation.activeTrack?.artists.length - 1}<span>,&nbsp;</span>{/if}
           {/each}
         </div>
       {/if}
     </div>
     <div class="player__column">
       <audio
-        src={$store.activeTrack?.preview_url}
-        bind:paused={$store.paused}
+        src={$navigation.activeTrack?.preview_url}
+        bind:paused={$navigation.paused}
         bind:currentTime
         bind:duration
         bind:volume
@@ -49,10 +49,10 @@
         <Button
           element="button"
           variant="icon-solid"
-          aria-label={$store.paused ? 'Play song' : 'Pause song'}
-          on:click={() => ($store.paused ? setPaused(false) : setPaused(true))}
+          aria-label={$navigation.paused ? 'Play song' : 'Pause song'}
+          on:click={() => ($navigation.paused ? setPaused(false) : setPaused(true))}
         >
-          {#if $store.paused}
+          {#if $navigation.paused}
             <IconPlayerPlayFilled size={18} />
           {:else}
             <IconPlayerPauseFilled size={18} />

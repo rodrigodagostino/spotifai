@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { IconExternalLink } from '@tabler/icons-svelte'
+  import { IconExternalLink } from '@tabler/icons-svelte';
 
-  import type { PageData } from '../../routes/$types'
-  import Button from './Button.svelte'
-  import ButtonLogout from './ButtonLogout.svelte'
+  import type { PageData } from '../../routes/$types';
+  import Button from './Button.svelte';
+  import ButtonLogout from './ButtonLogout.svelte';
 
-  export let user: PageData['user']
+  export let user: PageData['user'];
 
-  let isMenuExpanded = false
+  let isMenuExpanded = false;
 </script>
 
 <div class="top-panel-profile">

@@ -1,13 +1,13 @@
 <script lang="ts">
-  import type { PageData } from './$types'
-  import getCopyrightSymbol from '$helpers/copyright-symbol'
-  import ItemPage from '$components/ItemPage.svelte'
-  import TrackList from '$components/TrackList.svelte'
+  import type { PageData } from './$types';
+  import getCopyrightSymbol from '$helpers/copyright-symbol';
+  import ItemPage from '$components/ItemPage.svelte';
+  import TrackList from '$components/TrackList.svelte';
 
-  export let data: PageData
+  export let data: PageData;
 
-  $: album = data.album
-  $: color = data.color
+  $: album = data.album;
+  $: color = data.color;
 </script>
 
 <ItemPage

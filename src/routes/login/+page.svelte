@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Button from '$components/Button.svelte'
-  import SpotifyLogo from '$components/SpotifyLogo.svelte'
+  import Button from '$components/Button.svelte';
+  import SpotifyLogo from '$components/SpotifyLogo.svelte';
 </script>
 
 <div class="login">

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { invalidateAll } from '$app/navigation'
-  import Button from './Button.svelte'
+  import { invalidateAll } from '$app/navigation';
+  import Button from './Button.svelte';
 
   export let variant:
     | 'primary-solid'
@@ -11,7 +11,7 @@
     | 'tertiary-outline'
     | 'text'
     | 'icon-solid'
-    | 'icon-ghost' = 'secondary-solid'
+    | 'icon-ghost' = 'secondary-solid';
 </script>
 
 <form
@@ -23,9 +23,9 @@
       headers: {
         accept: 'application/json',
       },
-    })
+    });
 
-    if (response.ok) invalidateAll()
+    if (response.ok) invalidateAll();
   }}
 >
   <Button element="button" type="submit" {variant}>Logout</Button>

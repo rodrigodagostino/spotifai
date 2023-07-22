@@ -5,16 +5,16 @@ declare global {
     // interface Error {}
     // interface Locals {}
     interface PageData {
-      user: SpotifyApi.CurrentUsersProfileResponse | null
-      title?: string
-      color?: string | null
+      user: SpotifyApi.CurrentUsersProfileResponse | null;
+      title?: string;
+      color?: string | null;
     }
     // interface Platform {}
   }
 
   interface Window {
-    refreshPromise: Promise<Response> | null
+    refreshPromise: Promise<Response> | null;
   }
 }
 
-export {}
+export {};

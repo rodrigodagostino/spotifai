@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { IconMenu2 } from '@tabler/icons-svelte'
+  import { IconMenu2 } from '@tabler/icons-svelte';
 
-  import { page } from '$app/stores'
-  import { setIsMenuOpen, store } from '$stores'
-  import Button from './Button.svelte'
-  import TopPanelProfile from './TopPanelProfile.svelte'
+  import { page } from '$app/stores';
+  import { setIsMenuOpen, navigation } from '$stores/navigation';
+  import Button from './Button.svelte';
+  import TopPanelProfile from './TopPanelProfile.svelte';
 
-  $: user = $page.data.user
+  $: user = $page.data.user;
 </script>
 
-<header class="top-panel" inert={$store.isMenuOpen}>
+<header class="top-panel" inert={$navigation.isMenuOpen}>
   <Button element="button" variant="icon-ghost" on:click={() => setIsMenuOpen(true)}>
-    <span class="sr-only">{$store.isMenuOpen ? 'Close menu' : 'Open menu'}</span>
+    <span class="sr-only">{$navigation.isMenuOpen ? 'Close menu' : 'Open menu'}</span>
     <IconMenu2 size={32} />
   </Button>
   <TopPanelProfile {user} />

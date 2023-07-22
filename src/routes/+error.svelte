@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { invalidate } from '$app/navigation'
-  import { page } from '$app/stores'
-  import Button from '$components/Button.svelte'
-  import ButtonLogout from '$components/ButtonLogout.svelte'
-  import { IconExclamationCircle } from '@tabler/icons-svelte'
+  import { invalidate } from '$app/navigation';
+  import { page } from '$app/stores';
+  import Button from '$components/Button.svelte';
+  import ButtonLogout from '$components/ButtonLogout.svelte';
+  import { IconExclamationCircle } from '@tabler/icons-svelte';
 
-  let isRetrying = false
-  const retryRoutes = ['/album/[id]', '/playlist/[id]']
+  let isRetrying = false;
+  const retryRoutes = ['/album/[id]', '/playlist/[id]'];
 </script>
 
 <svelte:head>
@@ -35,9 +35,9 @@
           element="button"
           disabled={isRetrying}
           on:click={async () => {
-            isRetrying = true
-            await invalidate(`app:${$page.route.id}`)
-            isRetrying = false
+            isRetrying = true;
+            await invalidate(`app:${$page.route.id}`);
+            isRetrying = false;
           }}>Retry</Button
         >
       </div>

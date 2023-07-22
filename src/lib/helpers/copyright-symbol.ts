@@ -1,14 +1,14 @@
 const getCopyrightSymbol = (type: string): string => {
   switch (type) {
     case 'R':
-      return '®'
+      return '®';
     case 'P':
-      return '℗'
+      return '℗';
     case 'C':
-      return '©'
+      return '©';
     default:
-      return type
+      return type;
   }
-}
+};
 
-export default getCopyrightSymbol
+export default getCopyrightSymbol;

@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { IconClock, IconPlayerPauseFilled, IconPlayerPlayFilled } from '@tabler/icons-svelte'
+  import { IconClock, IconPlayerPauseFilled, IconPlayerPlayFilled } from '@tabler/icons-svelte';
 
-  import Button from '$components/Button.svelte'
-  import { setActiveTrack, setPaused, store } from '$stores'
-  import msToTime from '$helpers/ms-to-time'
-  import playingAnimation from '$assets/images/playing-animation.gif'
+  import Button from '$components/Button.svelte';
+  import { setActiveTrack, setPaused, navigation } from '$stores/navigation';
+  import msToTime from '$helpers/ms-to-time';
+  import playingAnimation from '$assets/images/playing-animation.gif';
 
-  export let tracks: SpotifyApi.TrackObjectFull[] | SpotifyApi.TrackObjectSimplified[]
+  export let tracks: SpotifyApi.TrackObjectFull[] | SpotifyApi.TrackObjectSimplified[];
   export let type:
     | SpotifyApi.AlbumObjectSimplified['album_type']
-    | SpotifyApi.PlaylistBaseObject['type']
+    | SpotifyApi.PlaylistBaseObject['type'];
 </script>
 
 <div class="track-list__labels">
@@ -27,14 +27,14 @@
   {#each tracks as track, i}
     <li
       class="track-list__track"
-      class:is-active={track.id === $store.activeTrack?.id}
-      class:is-paused={track.id === $store.activeTrack?.id && $store.paused}
+      class:is-active={track.id === $navigation.activeTrack?.id}
+      class:is-paused={track.id === $navigation.activeTrack?.id && $navigation.paused}
     >
       <div class="track-list__track__column">
         <span class="track-list__track__number">
           {type === 'album' && track.track_number ? track.track_number : i + 1}
         </span>
-        {#if track.id === $store.activeTrack?.id && !$store.paused}
+        {#if track.id === $navigation.activeTrack?.id && !$navigation.paused}
           <Button
             element="button"
             variant="icon-ghost"

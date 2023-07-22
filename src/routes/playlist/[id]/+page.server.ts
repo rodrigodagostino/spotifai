@@ -1,5 +1,5 @@
-import { fail, type Actions } from '@sveltejs/kit'
-import { SPOTIFY_BASE_URL } from '$env/static/private'
+import { fail, type Actions } from '@sveltejs/kit';
+import { SPOTIFY_BASE_URL } from '$env/static/private';
 
 export const actions: Actions = {
   followPlaylist: async ({ cookies, params, fetch }) => {
@@ -8,8 +8,8 @@ export const actions: Actions = {
       headers: {
         Authorization: `Bearer ${cookies.get('access_token')}`,
       },
-    })
-    if (!response.ok) return fail(response.status, { followError: response.statusText })
+    });
+    if (!response.ok) return fail(response.status, { followError: response.statusText });
   },
 
   unfollowPlaylist: async ({ cookies, params, fetch }) => {
@@ -18,7 +18,7 @@ export const actions: Actions = {
       headers: {
         Authorization: `Bearer ${cookies.get('access_token')}`,
       },
-    })
-    if (!response.ok) return fail(response.status, { followError: response.statusText })
+    });
+    if (!response.ok) return fail(response.status, { followError: response.statusText });
   },
-}
+};

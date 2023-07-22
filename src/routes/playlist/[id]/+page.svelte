@@ -1,57 +1,57 @@
 <script lang="ts">
-  import { IconArrowLeft, IconArrowRight, IconHeart, IconHeartFilled } from '@tabler/icons-svelte'
+  import { IconArrowLeft, IconArrowRight, IconHeart, IconHeartFilled } from '@tabler/icons-svelte';
 
-  import type { PageData } from './$types'
-  import type { ActionData } from '../$types'
-  import { page } from '$app/stores'
-  import { applyAction, enhance } from '$app/forms'
-  import ItemPage from '$components/ItemPage.svelte'
-  import TrackList from '$components/TrackList.svelte'
-  import Button from '$components/Button.svelte'
+  import type { PageData } from './$types';
+  import type { ActionData } from '../$types';
+  import { page } from '$app/stores';
+  import { applyAction, enhance } from '$app/forms';
+  import ItemPage from '$components/ItemPage.svelte';
+  import TrackList from '$components/TrackList.svelte';
+  import Button from '$components/Button.svelte';
 
-  export let data: PageData
-  export let form: ActionData
+  export let data: PageData;
+  export let form: ActionData;
 
-  $: playlist = data.playlist
-  $: color = data.color
-  $: tracks = data.playlist.tracks
-  $: isFollowing = data.isFollowing
-  $: currentPageNumber = $page.url.searchParams.get('page') || 1
+  $: playlist = data.playlist;
+  $: color = data.color;
+  $: tracks = data.playlist.tracks;
+  $: isFollowing = data.isFollowing;
+  $: currentPageNumber = $page.url.searchParams.get('page') || 1;
 
-  let filteredTracks: SpotifyApi.TrackObjectFull[]
-  let followButton: Button<'button'>
-  let isPostingFollow = false
-  let isLoadingMore = false
+  let filteredTracks: SpotifyApi.TrackObjectFull[];
+  let followButton: Button<'button'>;
+  let isPostingFollow = false;
+  let isLoadingMore = false;
 
   $: {
-    filteredTracks = []
+    filteredTracks = [];
     tracks.items.forEach((item) => {
-      if (item.track) filteredTracks = [...filteredTracks, item.track]
-    })
+      if (item.track) filteredTracks = [...filteredTracks, item.track];
+    });
   }
 
   const formatFollowers = Intl.NumberFormat('en', {
     notation: 'compact',
-  })
+  });
 
   const loadMore = async () => {
-    if (!tracks.next) return
+    if (!tracks.next) return;
 
-    isLoadingMore = true
+    isLoadingMore = true;
     const response = await fetch(
       tracks.next.replace('https://api.spotify.com/v1/', '/api/spotify/')
-    )
-    const responseJSON = await response.json()
+    );
+    const responseJSON = await response.json();
     if (response.ok) {
       tracks = {
         ...responseJSON,
         items: [...tracks.items, ...responseJSON.items],
-      }
+      };
     } else {
-      console.error(response.status, response.statusText)
+      console.error(response.status, response.statusText);
     }
-    isLoadingMore = false
-  }
+    isLoadingMore = false;
+  };
 </script>
 
 <ItemPage
@@ -78,15 +78,15 @@
         method="POST"
         action={`?/${isFollowing ? 'unfollowPlaylist' : 'followPlaylist'}`}
         use:enhance={() => {
-          isPostingFollow = true
+          isPostingFollow = true;
           return async ({ result }) => {
-            await applyAction(result)
-            followButton.focus()
-            followButton.contentEditable = false
+            await applyAction(result);
+            followButton.focus();
+            followButton.contentEditable = false;
             if (result.type === 'success') {
-              isFollowing = !isFollowing
+              isFollowing = !isFollowing;
             }
-          }
+          };
         }}
       >
         <Button

@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { IconMusic } from '@tabler/icons-svelte'
+  import { IconMusic } from '@tabler/icons-svelte';
 
-  type AlbumType = SpotifyApi.AlbumObjectFull | SpotifyApi.AlbumObjectSimplified
-  type PlaylistType = SpotifyApi.PlaylistObjectFull | SpotifyApi.PlaylistObjectSimplified
-  type ArtistType = SpotifyApi.ArtistObjectFull
+  type AlbumType = SpotifyApi.AlbumObjectFull | SpotifyApi.AlbumObjectSimplified;
+  type PlaylistType = SpotifyApi.PlaylistObjectFull | SpotifyApi.PlaylistObjectSimplified;
+  type ArtistType = SpotifyApi.ArtistObjectFull;
 
-  export let item: AlbumType | PlaylistType | ArtistType
+  export let item: AlbumType | PlaylistType | ArtistType;
 </script>
 
 <div class="card">

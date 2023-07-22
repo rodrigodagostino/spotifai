@@ -1,15 +1,15 @@
 <script lang="ts">
-  import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+  import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
-  type Element = $$Generic<'a' | 'button'>
+  type Element = $$Generic<'a' | 'button'>;
 
   interface ButtonElements {
-    a: HTMLAnchorAttributes
-    button: HTMLButtonAttributes
+    a: HTMLAnchorAttributes;
+    button: HTMLButtonAttributes;
   }
 
   type $$Props = ButtonElements[Element] & {
-    element: Element
+    element: Element;
     variant?:
       | 'primary-solid'
       | 'primary-outline'
@@ -19,11 +19,11 @@
       | 'tertiary-outline'
       | 'text'
       | 'icon-solid'
-      | 'icon-ghost'
-    size?: 'small' | 'medium' | 'large'
-  }
+      | 'icon-ghost';
+    size?: 'small' | 'medium' | 'large';
+  };
 
-  export let element: Element
+  export let element: Element;
   export let variant:
     | 'primary-solid'
     | 'primary-outline'
@@ -33,12 +33,12 @@
     | 'tertiary-outline'
     | 'text'
     | 'icon-solid'
-    | 'icon-ghost' = 'secondary-solid'
-  export let size: 'small' | 'medium' | 'large' = 'small'
+    | 'icon-ghost' = 'secondary-solid';
+  export let size: 'small' | 'medium' | 'large' = 'small';
 
-  let buttonRef: HTMLAnchorElement | HTMLButtonElement
+  let buttonRef: HTMLAnchorElement | HTMLButtonElement;
 
-  export const focus = () => buttonRef.focus()
+  export const focus = () => buttonRef.focus();
 </script>
 
 <svelte:element
