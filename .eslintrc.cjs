@@ -5,7 +5,7 @@ module.exports = {
     es2017: true,
     node: true,
   },
-  extends: ['plugin:svelte/prettier', 'prettier'],
+  extends: ['plugin:svelte/prettier', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',
