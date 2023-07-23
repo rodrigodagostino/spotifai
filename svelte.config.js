@@ -13,10 +13,10 @@ const config = {
     // See https://kit.svelte.dev/docs/adapters for more information about adapters.
     adapter: adapter(),
     alias: {
-      $assets: 'src/assets',
+      $assets: 'src/lib/assets',
       $components: 'src/lib/components',
       $helpers: 'src/lib/helpers',
-      $stores: 'src/stores',
+      $stores: 'src/lib/stores',
     },
   },
 };
