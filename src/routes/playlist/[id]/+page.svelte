@@ -5,6 +5,7 @@
   import type { ActionData } from '../$types';
   import { page } from '$app/stores';
   import { applyAction, enhance } from '$app/forms';
+  import { addToast } from '$stores/toasts';
   import ItemPage from '$components/ItemPage.svelte';
   import TrackList from '$components/TrackList.svelte';
   import Button from '$components/Button.svelte';
@@ -48,7 +49,7 @@
         items: [...tracks.items, ...responseJSON.items],
       };
     } else {
-      console.error(response.status, response.statusText);
+      addToast('error', responseJSON.error.message || 'Could not load more tracks.');
     }
     isLoadingMore = false;
   };
@@ -80,12 +81,16 @@
         use:enhance={() => {
           isPostingFollow = true;
           return async ({ result }) => {
-            await applyAction(result);
-            followButton.focus();
             followButton.contentEditable = false;
             if (result.type === 'success') {
+              await applyAction(result);
               isFollowing = !isFollowing;
+            } else if (result.type === 'failure') {
+              addToast('error', result.data?.followError);
+            } else {
+              await applyAction(result);
             }
+            followButton.focus();
           };
         }}
       >

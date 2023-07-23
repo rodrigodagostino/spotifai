@@ -9,6 +9,7 @@
   import SidePanel from '$components/SidePanel.svelte';
   import TopPanel from '$components/TopPanel.svelte';
   import BottomPanel from '$components/BottomPanel.svelte';
+  import Toasts from '$components/Toasts.svelte';
   import Button from '$components/Button.svelte';
   import './styles.css';
 
@@ -51,6 +52,8 @@
     <BottomPanel />
   {/if}
 </div>
+
+<Toasts />
 
 <style lang="scss">
   :global(.button--skip-to-content) {
