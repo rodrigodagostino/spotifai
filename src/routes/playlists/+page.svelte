@@ -1,12 +1,35 @@
 <script>
   import { IconPlus } from '@tabler/icons-svelte';
 
+  import { addToast } from '$stores/toasts';
   import Button from '$components/Button.svelte';
   import Card from '$components/Card.svelte';
+  import Pagination from '$components/Pagination.svelte';
 
   export let data;
 
+  let isLoadingMore = false;
+
   $: playlists = data.playlists;
+
+  const loadMore = async () => {
+    if (!playlists.next) return;
+
+    isLoadingMore = true;
+    const response = await fetch(
+      playlists.next.replace('https://api.spotify.com/v1/', '/api/spotify/')
+    );
+    const responseJSON = await response.json();
+    if (response.ok) {
+      playlists = {
+        ...responseJSON,
+        items: [...playlists.items, ...responseJSON.items],
+      };
+    } else {
+      addToast('error', responseJSON.error.message || 'Could not load more tracks.');
+    }
+    isLoadingMore = false;
+  };
 </script>
 
 <div class="playlists-page">
@@ -23,6 +46,7 @@
         <Card item={playlist} />
       {/each}
     </div>
+    <Pagination paginatedList={playlists} {isLoadingMore} on:loadMore={loadMore} />
   {:else}
     <div class="playlists-page__no-playlists">
       <h2>You have not created any playlist yet.</h2>
