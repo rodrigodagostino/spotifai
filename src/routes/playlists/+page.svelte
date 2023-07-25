@@ -35,7 +35,7 @@
 <div class="playlists-page">
   <header class="playlists-page__header">
     <h1 class="playlists-page__title">Your playlists</h1>
-    <Button element="a" href="/playlists" variant="secondary-outline">
+    <Button element="a" href="/playlists/add" variant="secondary-outline">
       <IconPlus size={18} />
       Add new
     </Button>

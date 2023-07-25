@@ -64,7 +64,9 @@
   <p slot="description" class="playlist__description">{@html playlist.description}</p>
   <p slot="meta" class="playlist__meta">
     <span class="playlist__owner">{playlist.owner.display_name}</span>
-    <span class="playlist__followers">{formatFollowers.format(playlist.followers.total)}</span>
+    <span class="playlist__followers">
+      {formatFollowers.format(playlist.followers.total)} followers
+    </span>
     <span class="playlist__total-tracks">
       {playlist.tracks.total}
       {playlist.tracks.total === 1 ? 'song' : 'songs'}
