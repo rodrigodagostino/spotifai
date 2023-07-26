@@ -1,9 +1,11 @@
 <script lang="ts">
   import NProgress from 'nprogress';
   import 'nprogress/nprogress.css';
+  import MicroModal from 'micromodal';
 
   import type { LayoutData } from './$types';
   import { afterNavigate, beforeNavigate } from '$app/navigation';
+  import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import { navigation } from '$stores/navigation';
   import SidePanel from '$components/SidePanel.svelte';
@@ -18,6 +20,8 @@
   $: user = data.user;
 
   NProgress.configure({ showSpinner: false });
+
+  if (browser) MicroModal.init();
 
   beforeNavigate(() => {
     NProgress.start();

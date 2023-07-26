@@ -1,10 +1,12 @@
 <script>
+  import MicroModal from 'micromodal';
   import { IconPlus } from '@tabler/icons-svelte';
 
   import { addToast } from '$stores/toasts';
   import Button from '$components/Button.svelte';
   import Card from '$components/Card.svelte';
   import Pagination from '$components/Pagination.svelte';
+  import Modal from '$components/Modal.svelte';
 
   export let data;
 
@@ -35,7 +37,15 @@
 <div class="playlists-page">
   <header class="playlists-page__header">
     <h1 class="playlists-page__title">Your playlists</h1>
-    <Button element="a" href="/playlists/add" variant="secondary-outline">
+    <Button
+      element="a"
+      href="/playlists/add"
+      variant="secondary-outline"
+      on:click={(e) => {
+        e.preventDefault();
+        MicroModal.show('add-playlist-modal');
+      }}
+    >
       <IconPlus size={18} />
       Add new
     </Button>
@@ -53,6 +63,8 @@
     </div>
   {/if}
 </div>
+
+<Modal id="add-playlist-modal" title="Add a new playlist">Dummy content</Modal>
 
 <style lang="scss">
   .playlists-page {
