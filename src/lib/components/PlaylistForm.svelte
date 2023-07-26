@@ -1,17 +1,22 @@
 <script lang="ts">
   import type { ActionData as AddActionData } from '../../routes/playlists/add/$types';
+  import type { ActionData as EditActionData } from '../../routes/playlist/[id]/edit/$types';
   import Button from './Button.svelte';
 
-  export let form: AddActionData;
+  export let form: AddActionData | EditActionData;
   export let userId: string | undefined = undefined;
   export let action: string | undefined = undefined;
+  export let playlist:
+    | SpotifyApi.PlaylistObjectFull
+    | SpotifyApi.PlaylistObjectSimplified
+    | undefined = undefined;
 </script>
 
 <form class="playlist-form" method="POST" {action}>
   {#if userId}<input hidden name="userId" value={userId} />{/if}
   <div class="form-field" class:form-field--has-error={form?.nameError}>
     <label for="playlist-name">Name</label>
-    <input type="text" id="playlist-name" name="name" value={form?.name || ''} />
+    <input type="text" id="playlist-name" name="name" value={form?.name || playlist?.name || ''} />
     {#if form?.nameError}
       <p class="form-field__error">{form?.nameError}</p>
     {/if}
@@ -22,13 +27,13 @@
       type="text"
       id="playlist-description"
       name="description"
-      value={form?.description || ''}
+      value={form?.description || playlist?.description || ''}
     />
   </div>
   {#if form?.apiError}
-    <p class="form__error">{form?.apiError}</p>
+    <p class="playlist-form__error">{form?.apiError}</p>
   {/if}
-  <Button element="button" type="submit">Create playlist</Button>
+  <Button element="button" type="submit">{playlist ? 'Save playlist' : 'Create playlist'}</Button>
 </form>
 
 <style lang="scss">
@@ -42,6 +47,10 @@
     :global(.button) {
       align-self: center;
       margin-top: 1rem;
+    }
+
+    &__error {
+      color: var(--red-500);
     }
   }
 
