@@ -9,7 +9,8 @@ export const actions: Actions = {
         Authorization: `Bearer ${cookies.get('access_token')}`,
       },
     });
-    if (!response.ok) return fail(response.status, { followError: response.statusText });
+    if (!response.ok)
+      return fail(response.status, { followError: response.statusText, followForm: true });
   },
 
   unfollowPlaylist: async ({ cookies, params, fetch }) => {
@@ -19,6 +20,7 @@ export const actions: Actions = {
         Authorization: `Bearer ${cookies.get('access_token')}`,
       },
     });
-    if (!response.ok) return fail(response.status, { followError: response.statusText });
+    if (!response.ok)
+      return fail(response.status, { followError: response.statusText, followForm: true });
   },
 };

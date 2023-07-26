@@ -14,6 +14,7 @@ export const actions: Actions = {
         description,
         nameError: 'Playlist name is required.',
         apiError: false,
+        editForm: true,
       });
     }
 
@@ -35,6 +36,7 @@ export const actions: Actions = {
         description,
         apiError: errorJSON?.error?.message ?? 'An error has occured',
         nameError: false,
+        editForm: true,
       });
     } else {
       if (url.searchParams.has('redirect')) throw redirect(303, `/playlist/${params.id}`);

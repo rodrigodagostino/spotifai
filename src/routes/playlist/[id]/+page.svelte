@@ -3,15 +3,20 @@
 
   import type { PageData } from './$types';
   import type { ActionData } from '../$types';
-  import { page } from '$app/stores';
+  import type { ActionData as EditActionData } from './edit/$types';
   import { applyAction, enhance } from '$app/forms';
+  import { invalidate } from '$app/navigation';
+  import { page } from '$app/stores';
   import { addToast } from '$stores/toasts';
   import ItemPage from '$components/ItemPage.svelte';
   import TrackList from '$components/TrackList.svelte';
   import Button from '$components/Button.svelte';
+  import Modal from '$components/Modal.svelte';
+  import PlaylistForm from '$components/PlaylistForm.svelte';
+  import MicroModal from 'micromodal';
 
   export let data: PageData;
-  export let form: ActionData;
+  export let form: ActionData | EditActionData;
 
   $: playlist = data.playlist;
   $: color = data.color;
@@ -74,7 +79,15 @@
   </p>
   <div class="playlist__actions">
     {#if data.user?.id === playlist.owner.id}
-      <Button element="a" href="/playlist/{playlist.id}/edit" variant="secondary-outline">
+      <Button
+        element="a"
+        href="/playlist/{playlist.id}/edit"
+        variant="secondary-outline"
+        on:click={(e) => {
+          e.preventDefault();
+          MicroModal.show('edit-playlist-modal');
+        }}
+      >
         Edit playlist
       </Button>
     {:else if isFollowing !== null}
@@ -176,6 +189,19 @@
     </div>
   {/if}
 </ItemPage>
+
+<Modal id="edit-playlist-modal" title="Edit {playlist.name}">
+  <PlaylistForm
+    form={form && 'editForm' in form ? form : null}
+    userId={data.user?.id}
+    {playlist}
+    action="/playlist/{playlist.id}/edit"
+    on:success={() => {
+      MicroModal.close('edit-playlist-modal');
+      invalidate(`/api/spotify/playlists/${playlist.id}`);
+    }}
+  />
+</Modal>
 
 <style lang="scss">
   :global(.no-js) {
