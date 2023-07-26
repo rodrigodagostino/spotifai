@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import MicroModal from 'micromodal';
   import { IconPlus } from '@tabler/icons-svelte';
 
@@ -7,8 +7,11 @@
   import Card from '$components/Card.svelte';
   import Pagination from '$components/Pagination.svelte';
   import Modal from '$components/Modal.svelte';
+  import PlaylistForm from '$components/PlaylistForm.svelte';
+  import type { ActionData } from './add/$types';
 
   export let data;
+  export let form: ActionData;
 
   let isLoadingMore = false;
 
@@ -64,7 +67,9 @@
   {/if}
 </div>
 
-<Modal id="add-playlist-modal" title="Add a new playlist">Dummy content</Modal>
+<Modal id="add-playlist-modal" title="Add a new playlist">
+  <PlaylistForm {form} userId={data.user?.id} action="/playlists/add" />
+</Modal>
 
 <style lang="scss">
   .playlists-page {

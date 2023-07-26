@@ -49,7 +49,7 @@
 
     &__inner {
       width: 100%;
-      max-width: 30rem;
+      max-width: 25rem;
       max-height: 80vh;
       padding: 1.5rem;
       border-radius: 0.5rem;

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+  import { applyAction, enhance } from '$app/forms';
   import type { ActionData as AddActionData } from '../../routes/playlists/add/$types';
   import type { ActionData as EditActionData } from '../../routes/playlist/[id]/edit/$types';
   import Button from './Button.svelte';
@@ -10,9 +12,29 @@
     | SpotifyApi.PlaylistObjectFull
     | SpotifyApi.PlaylistObjectSimplified
     | undefined = undefined;
+
+  const dispatch = createEventDispatcher<{
+    success: {};
+    redirect: {};
+  }>();
+
+  let isFetching = false;
 </script>
 
-<form class="playlist-form" method="POST" {action}>
+<form
+  class="playlist-form"
+  method="POST"
+  {action}
+  use:enhance={() => {
+    isFetching = true;
+    return ({ result }) => {
+      applyAction(result);
+      isFetching = false;
+      if (result.type === 'success') dispatch('success');
+      if (result.type === 'redirect') dispatch('redirect');
+    };
+  }}
+>
   {#if userId}<input hidden name="userId" value={userId} />{/if}
   <div class="form-field" class:form-field--has-error={form?.nameError}>
     <label for="playlist-name">Name</label>
@@ -33,7 +55,9 @@
   {#if form?.apiError}
     <p class="playlist-form__error">{form?.apiError}</p>
   {/if}
-  <Button element="button" type="submit">{playlist ? 'Save playlist' : 'Create playlist'}</Button>
+  <Button element="button" type="submit" disabled={isFetching}>
+    {playlist ? 'Save playlist' : 'Create playlist'}
+  </Button>
 </form>
 
 <style lang="scss">
