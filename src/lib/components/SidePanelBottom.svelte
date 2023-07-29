@@ -7,41 +7,60 @@
 
 {#if playlists && playlists.length > 0}
   <nav class="side-panel-bottom">
-    <ul class="side-panel-bottom__playlists">
-      {#each playlists as playlist}
-        <li
-          class="side-panel-bottom__playlist"
-          class:is-current={$page.url.pathname === `/playlist/${playlist.id}`}
-        >
-          <a class="side-panel-bottom__playlist__link" href="/playlist/{playlist.id}">
-            {#if playlist.images.length > 0}
-              <img
-                class="side-panel-bottom__playlist__image"
-                src={playlist.images[0].url}
-                alt={playlist.name}
-              />
-            {:else}
-              <div class="side-panel-bottom__playlist__image-placeholder">
-                <IconMusic size={28} />
-              </div>
-            {/if}
-            <p class="side-panel-bottom__playlist__title">{playlist.name}</p>
-            <p class="side-panel-bottom__playlist__owner">{playlist.owner.display_name}</p>
-          </a>
-        </li>
-      {/each}
-    </ul>
+    <div class="side-panel-bottom__inner">
+      <ul class="side-panel-bottom__playlists">
+        {#each playlists as playlist}
+          <li
+            class="side-panel-bottom__playlist"
+            class:is-current={$page.url.pathname === `/playlist/${playlist.id}`}
+          >
+            <a class="side-panel-bottom__playlist__link" href="/playlist/{playlist.id}">
+              {#if playlist.images.length > 0}
+                <img
+                  class="side-panel-bottom__playlist__image"
+                  src={playlist.images[0].url}
+                  alt={playlist.name}
+                />
+              {:else}
+                <div class="side-panel-bottom__playlist__image-placeholder">
+                  <IconMusic size={28} />
+                </div>
+              {/if}
+              <p class="side-panel-bottom__playlist__title">{playlist.name}</p>
+              <p class="side-panel-bottom__playlist__owner">{playlist.owner.display_name}</p>
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </div>
   </nav>
 {/if}
 
 <style lang="scss">
   .side-panel-bottom {
     grid-row: 2/3;
-    padding: 0.5rem;
     border-radius: 0.5rem;
     background-color: var(--gray-950);
-    overflow: auto;
-    scrollbar-width: thin;
+    overflow: hidden;
+
+    &__inner {
+      height: 100%;
+      padding: 0.5rem;
+      overflow: auto;
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 0.5rem;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--gray-500);
+      }
+
+      &::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.16);
+      }
+    }
 
     &__playlists {
       list-style: none;

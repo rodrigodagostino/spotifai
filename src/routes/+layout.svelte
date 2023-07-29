@@ -98,6 +98,18 @@
       overflow-x: hidden;
       overflow-y: scroll;
       scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 0.5rem;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--gray-500);
+      }
+
+      &::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.16);
+      }
     }
   }
 
