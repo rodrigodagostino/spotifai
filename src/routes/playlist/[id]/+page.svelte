@@ -5,7 +5,7 @@
   import type { ActionData } from '../$types';
   import type { ActionData as EditActionData } from './edit/$types';
   import { applyAction, enhance } from '$app/forms';
-  import { invalidate } from '$app/navigation';
+  import { invalidateAll } from '$app/navigation';
   import { page } from '$app/stores';
   import { addToast } from '$stores/toasts';
   import ItemPage from '$components/ItemPage.svelte';
@@ -198,7 +198,8 @@
     action="/playlist/{playlist.id}/edit"
     on:success={() => {
       MicroModal.close('edit-playlist-modal');
-      invalidate(`/api/spotify/playlists/${playlist.id}`);
+      // invalidate(`/api/spotify/playlists/${playlist.id}`);
+      invalidateAll();
     }}
   />
 </Modal>
