@@ -8,8 +8,9 @@
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import { navigation } from '$stores/navigation';
-  import SidePanel from '$components/SidePanel.svelte';
   import TopPanel from '$components/TopPanel.svelte';
+  import SidePanel from '$components/SidePanel.svelte';
+  import SidePanelBottom from '$components/SidePanelBottom.svelte';
   import BottomPanel from '$components/BottomPanel.svelte';
   import Toasts from '$components/Toasts.svelte';
   import Button from '$components/Button.svelte';
@@ -18,6 +19,7 @@
   export let data: LayoutData;
 
   $: user = data.user;
+  $: userPlaylists = data.userPlaylists;
 
   NProgress.configure({ showSpinner: false });
 
@@ -46,6 +48,7 @@
   {#if user}
     <TopPanel />
     <SidePanel />
+    <SidePanelBottom playlists={userPlaylists} />
   {/if}
   <main class="page-main" id="main" inert={$navigation.isMenuOpen}>
     <div class="page-main__inner">
