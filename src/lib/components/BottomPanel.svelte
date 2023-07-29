@@ -44,6 +44,7 @@
         bind:currentTime
         bind:duration
         bind:volume
+        on:ended={() => (currentTime = 0)}
       />
       <div class="player__play">
         <Button
