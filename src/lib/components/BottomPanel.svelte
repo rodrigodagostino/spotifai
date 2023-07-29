@@ -173,6 +173,7 @@
       display: none;
       font-size: 0.75rem;
       color: var(--gray-300);
+      white-space: nowrap;
     }
 
     &__current-time {
