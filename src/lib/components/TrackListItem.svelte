@@ -11,12 +11,14 @@
   import Button from './Button.svelte';
   import playingAnimation from '$assets/images/playing-animation.gif';
 
+  export let index: number;
+  export let currentIndex: number;
   export let type:
     | SpotifyApi.AlbumObjectSimplified['album_type']
     | SpotifyApi.PlaylistBaseObject['type'];
   export let track: SpotifyApi.TrackObjectFull | SpotifyApi.TrackObjectSimplified;
-  export let index: number;
-  export let currentIndex: number;
+  export let userPlaylists: SpotifyApi.PlaylistObjectSimplified[] | undefined;
+  export let isOwner: boolean;
 
   let trackRef: HTMLLIElement;
   let menuX = 0;
@@ -109,18 +111,23 @@
       {msToTime(track.duration_ms)}
     </span>
   </div>
-  <ul class="track-list-item__menu" style="top: {menuY}px; left: {menuX}px" aria-hidden={isHidden}>
-    <li>
-      Add to playlist
-      <IconCaretRightFilled size={16} />
-      <ul class="track-list-item__submenu">
-        <li>Playlist 1</li>
-        <li>Playlist 2</li>
-        <li>Playlist 3</li>
-        <li>Playlist 4</li>
-      </ul>
-    </li>
-  </ul>
+  {#if isOwner && userPlaylists}
+    <ul
+      class="track-list-item__menu"
+      style="top: {menuY}px; left: {menuX}px"
+      aria-hidden={isHidden}
+    >
+      <li>
+        Add to playlist
+        <IconCaretRightFilled size={16} />
+        <ul class="track-list-item__submenu">
+          {#each userPlaylists as playlist}
+            <li>{playlist.name}</li>
+          {/each}
+        </ul>
+      </li>
+    </ul>
+  {/if}
 </li>
 
 <style lang="scss">

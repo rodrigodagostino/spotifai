@@ -3,10 +3,12 @@
 
   import TrackListItem from './TrackListItem.svelte';
 
-  export let tracks: SpotifyApi.TrackObjectFull[] | SpotifyApi.TrackObjectSimplified[];
   export let type:
     | SpotifyApi.AlbumObjectSimplified['album_type']
     | SpotifyApi.PlaylistBaseObject['type'];
+  export let tracks: SpotifyApi.TrackObjectFull[] | SpotifyApi.TrackObjectSimplified[];
+  export let userPlaylists: SpotifyApi.PlaylistObjectSimplified[] | undefined;
+  export let isOwner = false;
 
   let currentIndex: number;
 </script>
@@ -24,7 +26,7 @@
 </div>
 <ul class="track-list__items">
   {#each tracks as track, index}
-    <TrackListItem {type} {track} {index} bind:currentIndex />
+    <TrackListItem {index} bind:currentIndex {type} {track} {userPlaylists} {isOwner} />
   {/each}
 </ul>
 

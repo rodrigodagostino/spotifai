@@ -132,7 +132,12 @@
     {/if}
   </div>
   {#if tracks.items.length > 0}
-    <TrackList tracks={filteredTracks} type={playlist.type} />
+    <TrackList
+      type={playlist.type}
+      tracks={filteredTracks}
+      userPlaylists={data.userPlaylists?.filter((playlist) => playlist.owner.id === data.user?.id)}
+      isOwner={data.user?.id === playlist.owner.id}
+    />
     {#if tracks.next}
       <div class="playlist__load-more">
         {#if !isLoadingMore}
