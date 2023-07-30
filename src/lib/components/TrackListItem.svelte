@@ -28,7 +28,9 @@
   let menuX = 0;
   let menuY = 0;
   let isHidden = true;
+
   let tracksBeingAddedToPlaylist: string[] = [];
+  let tracksBeingRemovedFromPlaylist: string[] = [];
 
   $: if (currentIndex !== index) isHidden = true;
 
@@ -170,9 +172,35 @@
       </li>
       {#if isOwner}
         <li class="track-list-item__menu__item">
-          <form method="POST" action="/playlist/{$page.params.id}?/removeTrack">
+          <form
+            method="POST"
+            action="/playlist/{$page.params.id}?/removeTrack"
+            use:enhance={({ cancel }) => {
+              if (tracksBeingRemovedFromPlaylist.includes(track.id)) cancel();
+              tracksBeingRemovedFromPlaylist = [...tracksBeingRemovedFromPlaylist, track.id];
+              return async ({ result }) => {
+                if (result.type === 'error') {
+                  addToast('error', result.error.message);
+                }
+                if (result.type === 'redirect') {
+                  const url = new URL(`${$page.url.origin}${result.location}`);
+                  const successMessage = url.searchParams.get('success');
+                  const errorMessage = url.searchParams.get('error');
+                  if (successMessage) addToast('success', successMessage);
+                  if (errorMessage) addToast('error', errorMessage);
+                  invalidateAll();
+                }
+                tracksBeingRemovedFromPlaylist.filter((id) => id !== track.id);
+              };
+            }}
+          >
             <input hidden value={track.id} name="track-id" />
-            <Button element="button" variant="text" aria-label="Remove {track.name} from playlist">
+            <Button
+              element="button"
+              variant="text"
+              aria-label="Remove {track.name} from playlist"
+              disabled={tracksBeingRemovedFromPlaylist.includes(track.id)}
+            >
               Remove from playlist
             </Button>
           </form>
