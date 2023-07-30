@@ -6,6 +6,7 @@
     IconPlayerPlayFilled,
   } from '@tabler/icons-svelte';
 
+  import { page } from '$app/stores';
   import { navigation, setActiveTrack, setPaused } from '$stores/navigation';
   import msToTime from '$helpers/ms-to-time';
   import Button from './Button.svelte';
@@ -111,18 +112,28 @@
       {msToTime(track.duration_ms)}
     </span>
   </div>
-  {#if isOwner && userPlaylists}
+  {#if userPlaylists}
     <ul
       class="track-list-item__menu"
       style="top: {menuY}px; left: {menuX}px"
       aria-hidden={isHidden}
     >
       <li>
-        Add to playlist
-        <IconCaretRightFilled size={16} />
+        <span>
+          Add to playlist
+          <IconCaretRightFilled size={16} />
+        </span>
         <ul class="track-list-item__submenu">
           {#each userPlaylists as playlist}
-            <li>{playlist.name}</li>
+            <li>
+              <form
+                method="POST"
+                action="/playlist/{playlist.id}?/addItem&redirect={$page.url.pathname}"
+              >
+                <input hidden value={track.id} name="track-id" />
+                <Button element="button" variant="text">{playlist.name}</Button>
+              </form>
+            </li>
           {/each}
         </ul>
       </li>
@@ -247,13 +258,16 @@
       }
 
       li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.5rem 0.5rem 0.5rem 0.75rem;
-        border-radius: 0.125rem;
-        white-space: nowrap;
-        position: relative;
+        span,
+        :global(.button) {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+          border-radius: 0.125rem;
+          white-space: nowrap;
+          position: relative;
+        }
 
         &:focus-within,
         &:hover {
@@ -270,7 +284,7 @@
       display: none;
       position: absolute;
       top: 50%;
-      left: 100%;
+      left: calc(100% - 0.25rem);
       transform: translateY(-50%);
       list-style: none;
     }

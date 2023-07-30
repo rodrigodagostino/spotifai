@@ -8,14 +8,21 @@
   export let id: IToast['id'];
   export let type: IToast['type'];
   export let message: IToast['message'];
+  export let onCloseDestination: string | undefined = undefined;
 </script>
 
 <div class="toast toast--{type}" transition:fly={{ x: 100, duration: 320 }}>
   <div class="toast__inner">
     <p class="toast__message" role="status">{message}</p>
-    <Button element="button" variant="icon-ghost" on:click|once={() => removeToast(id)}>
-      <IconX size={20} />
-    </Button>
+    {#if !onCloseDestination}
+      <Button element="button" variant="icon-ghost" on:click|once={() => removeToast(id)}>
+        <IconX size={20} />
+      </Button>
+    {:else}
+      <Button element="a" href={onCloseDestination} variant="icon-ghost">
+        <IconX size={20} />
+      </Button>
+    {/if}
   </div>
 </div>
 

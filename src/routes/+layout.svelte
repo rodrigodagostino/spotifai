@@ -15,8 +15,12 @@
   import Toasts from '$components/Toasts.svelte';
   import Button from '$components/Button.svelte';
   import './styles.css';
+  import Toast from '$components/Toast.svelte';
 
   export let data: LayoutData;
+
+  $: hasSuccess = $page.url.searchParams.get('success');
+  $: hasError = $page.url.searchParams.get('error');
 
   $: user = data.user;
   $: userPlaylists = data.userPlaylists;
@@ -58,6 +62,14 @@
   {#if user}
     <BottomPanel />
   {/if}
+  {#if hasSuccess || hasError}
+    <Toast
+      id="1234"
+      type={hasSuccess ? 'success' : 'error'}
+      message={hasSuccess || hasError || 'Dummy message'}
+      onCloseDestination={$page.url.pathname}
+    />
+  {/if}
 </div>
 
 <Toasts />
@@ -81,6 +93,13 @@
     grid-template-rows: auto 1fr;
     grid-gap: 0.5rem;
     padding: 0.5rem;
+
+    & > :global(.toast) {
+      position: fixed;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 
   .page-main {
