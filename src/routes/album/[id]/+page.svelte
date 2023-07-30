@@ -24,7 +24,11 @@
       {album.total_tracks === 1 ? 'song' : 'songs'}
     </span>
   </p>
-  <TrackList tracks={album.tracks.items} type={album.type} />
+  <TrackList
+    type={album.type}
+    tracks={album.tracks.items}
+    userPlaylists={data.userPlaylists?.filter((playlist) => playlist.owner.id === data.user?.id)}
+  />
   <div class="album__credits">
     <p class="album__release-date">
       {new Date(album.release_date).toLocaleDateString('en', { dateStyle: 'medium' })}
