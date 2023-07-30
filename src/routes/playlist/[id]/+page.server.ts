@@ -2,7 +2,7 @@ import { fail, type Actions, redirect } from '@sveltejs/kit';
 import { SPOTIFY_BASE_URL } from '$env/static/private';
 
 export const actions: Actions = {
-  addItem: async ({ request, cookies, url, params }) => {
+  addTrack: async ({ request, cookies, url, params }) => {
     const data = await request.formData();
     const trackId = data.get('track-id');
     const playlistId = params.id;
@@ -32,6 +32,26 @@ export const actions: Actions = {
     } else {
       throw redirect(303, `/playlist/${playlistId}?success=Track added successfully!`);
     }
+  },
+
+  removeTrack: async ({ request, cookies, params }) => {
+    const data = await request.formData();
+    const trackId = data.get('track-id');
+    const playlistId = params.id;
+
+    const response = await fetch(`${SPOTIFY_BASE_URL}/playlists/${playlistId}/tracks`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${cookies.get('access_token')}`,
+      },
+      body: JSON.stringify({
+        uris: [`spotify:track:${trackId}`],
+      }),
+    });
+
+    if (!response.ok) throw redirect(303, `/playlist/${playlistId}?error=${response.statusText}`);
+
+    throw redirect(303, `/playlist/${playlistId}?success=Track removed successfully!`);
   },
 
   followPlaylist: async ({ cookies, params, fetch }) => {

@@ -122,17 +122,17 @@
       style="top: {menuY}px; left: {menuX}px"
       aria-hidden={isHidden}
     >
-      <li>
+      <li class="track-list-item__menu__item has-submenu">
         <span>
           Add to playlist
           <IconCaretRightFilled size={16} />
         </span>
         <ul class="track-list-item__submenu">
           {#each userPlaylists as playlist}
-            <li>
+            <li class="track-list-item__submenu__item">
               <form
                 method="POST"
-                action="/playlist/{playlist.id}?/addItem&redirect={$page.url.pathname}"
+                action="/playlist/{playlist.id}?/addTrack&redirect={$page.url.pathname}"
                 use:enhance={({ cancel }) => {
                   if (tracksBeingAddedToPlaylist.includes(track.id)) cancel();
                   tracksBeingAddedToPlaylist = [...tracksBeingAddedToPlaylist, track.id];
@@ -158,13 +158,26 @@
                 <Button
                   element="button"
                   variant="text"
-                  disabled={tracksBeingAddedToPlaylist.includes(track.id)}>{playlist.name}</Button
+                  aria-label="Add {track.name} to {playlist.name} playlist"
+                  disabled={tracksBeingAddedToPlaylist.includes(track.id)}
                 >
+                  {playlist.name}
+                </Button>
               </form>
             </li>
           {/each}
         </ul>
       </li>
+      {#if isOwner}
+        <li class="track-list-item__menu__item">
+          <form method="POST" action="/playlist/{$page.params.id}?/removeTrack">
+            <input hidden value={track.id} name="track-id" />
+            <Button element="button" variant="text" aria-label="Remove {track.name} from playlist">
+              Remove from playlist
+            </Button>
+          </form>
+        </li>
+      {/if}
     </ul>
   {/if}
 </li>
@@ -270,6 +283,36 @@
       box-shadow:
         0 0 1px rgba(0, 0, 0, 0.16),
         0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+
+      &__item {
+        border-radius: 0.125rem;
+
+        span,
+        :global(.button) {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.5rem 0.75rem;
+          white-space: nowrap;
+          position: relative;
+        }
+
+        &:focus-within,
+        &:hover {
+          background-color: var(--gray-750);
+
+          .track-list-item__submenu {
+            display: block;
+          }
+        }
+
+        &.has-submenu {
+          span,
+          :global(.button) {
+            padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+          }
+        }
+      }
     }
 
     &__menu {
@@ -283,28 +326,6 @@
 
       &[aria-hidden='false'] {
         display: block;
-      }
-
-      li {
-        span,
-        :global(.button) {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 0.5rem 0.5rem 0.5rem 0.75rem;
-          border-radius: 0.125rem;
-          white-space: nowrap;
-          position: relative;
-        }
-
-        &:focus-within,
-        &:hover {
-          background-color: var(--gray-750);
-
-          .track-list-item__submenu {
-            display: block;
-          }
-        }
       }
     }
 
