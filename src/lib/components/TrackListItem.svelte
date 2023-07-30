@@ -6,11 +6,14 @@
     IconPlayerPlayFilled,
   } from '@tabler/icons-svelte';
 
+  import { enhance } from '$app/forms';
+  import { invalidateAll } from '$app/navigation';
   import { page } from '$app/stores';
   import { navigation, setActiveTrack, setPaused } from '$stores/navigation';
   import msToTime from '$helpers/ms-to-time';
   import Button from './Button.svelte';
   import playingAnimation from '$assets/images/playing-animation.gif';
+  import { addToast } from '$stores/toasts';
 
   export let index: number;
   export let currentIndex: number;
@@ -25,6 +28,7 @@
   let menuX = 0;
   let menuY = 0;
   let isHidden = true;
+  let tracksBeingAddedToPlaylist: string[] = [];
 
   $: if (currentIndex !== index) isHidden = true;
 
@@ -129,9 +133,33 @@
               <form
                 method="POST"
                 action="/playlist/{playlist.id}?/addItem&redirect={$page.url.pathname}"
+                use:enhance={({ cancel }) => {
+                  if (tracksBeingAddedToPlaylist.includes(track.id)) cancel();
+                  tracksBeingAddedToPlaylist = [...tracksBeingAddedToPlaylist, track.id];
+                  return ({ result }) => {
+                    if (result.type === 'error') {
+                      addToast('error', result.error.message);
+                    }
+                    if (result.type === 'redirect') {
+                      const url = new URL(`${$page.url.origin}${result.location}`);
+                      const successMessage = url.searchParams.get('success');
+                      const errorMessage = url.searchParams.get('error');
+                      if (successMessage) addToast('success', successMessage);
+                      if (errorMessage) addToast('error', errorMessage);
+                      invalidateAll();
+                    }
+                    tracksBeingAddedToPlaylist = tracksBeingAddedToPlaylist.filter(
+                      (id) => id !== track.id
+                    );
+                  };
+                }}
               >
                 <input hidden value={track.id} name="track-id" />
-                <Button element="button" variant="text">{playlist.name}</Button>
+                <Button
+                  element="button"
+                  variant="text"
+                  disabled={tracksBeingAddedToPlaylist.includes(track.id)}>{playlist.name}</Button
+                >
               </form>
             </li>
           {/each}
