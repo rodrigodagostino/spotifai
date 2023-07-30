@@ -35,7 +35,7 @@
     inset: 0;
     opacity: 0;
     visibility: hidden;
-    z-index: 1001;
+    z-index: 2000;
 
     &__overlay {
       display: flex;

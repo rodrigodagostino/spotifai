@@ -1,17 +1,17 @@
 import { get, writable } from 'svelte/store';
 import { uniqueId } from 'lodash';
 
-interface Toast {
+export interface IToast {
   id: string;
   type: 'success' | 'info' | 'warning' | 'error';
   message: string;
 }
 
-export const toasts = writable<Toast[]>([]);
+export const toasts = writable<IToast[]>([]);
 
 export const addToast = (
-  type: Toast['type'],
-  message: Toast['message'],
+  type: IToast['type'],
+  message: IToast['message'],
   timeout: number = 4000
 ) => {
   const toastId = uniqueId();
@@ -30,7 +30,7 @@ export const addToast = (
   }
 };
 
-export const removeToast = (id: Toast['id']) => {
+export const removeToast = (id: IToast['id']) => {
   const $toasts = get(toasts);
   if ($toasts.some((toast) => toast.id === id)) {
     toasts.update((currData) => currData.filter((item) => item.id !== id));
