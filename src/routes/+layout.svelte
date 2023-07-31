@@ -75,7 +75,7 @@
 <Toasts />
 
 <style lang="scss">
-  :global(.button--skip-to-content) {
+  :global(.button.button--skip-to-content) {
     position: absolute;
     top: -100%;
     left: 0.75rem;
@@ -87,6 +87,7 @@
   }
 
   .page__inner {
+    width: 100%;
     height: 100vh;
     display: grid;
     grid-template-columns: 1fr;

@@ -1,19 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import {
-    IconCaretRightFilled,
-    IconPlayerPauseFilled,
-    IconPlayerPlayFilled,
-  } from '@tabler/icons-svelte';
+  import { IconDots, IconPlayerPauseFilled, IconPlayerPlayFilled } from '@tabler/icons-svelte';
 
-  import { enhance } from '$app/forms';
-  import { invalidateAll } from '$app/navigation';
-  import { page } from '$app/stores';
   import { navigation, setActiveTrack, setPaused } from '$stores/navigation';
   import msToTime from '$helpers/ms-to-time';
   import Button from './Button.svelte';
   import playingAnimation from '$assets/images/playing-animation.gif';
-  import { addToast } from '$stores/toasts';
+  import TrackListItemMenu from './TrackListItemMenu.svelte';
 
   export let index: number;
   export let currentIndex: number;
@@ -25,33 +18,33 @@
   export let isOwner: boolean;
 
   let trackRef: HTMLLIElement;
-  let menuX = 0;
-  let menuY = 0;
-  let isHidden = true;
+  let contextMenuPosition: { x: string; y: string } = { x: '0', y: '0' };
+  let isActionsMenuHidden = true;
+  let isContextMenuHidden = true;
 
-  let tracksBeingAddedToPlaylist: string[] = [];
-  let tracksBeingRemovedFromPlaylist: string[] = [];
-
-  $: if (currentIndex !== index) isHidden = true;
+  $: if (currentIndex !== index) isContextMenuHidden = true;
 
   const handleContextMenu = (event: MouseEvent) => {
     event.preventDefault();
     currentIndex = index;
 
-    const menu = trackRef?.querySelector<HTMLUListElement>('.track-list-item__menu');
     const layerX = event.layerX;
     const layerY = event.layerY;
 
-    if (!!track && !!menu) {
-      menuX =
-        layerX + menu.offsetWidth * 2 <= trackRef.offsetWidth ? layerX : layerX - menu.offsetWidth;
-      menuY = layerY;
-      isHidden = false;
+    if (!!track) {
+      contextMenuPosition = {
+        x: `${layerX}px`,
+        y: `${layerY}px`,
+      };
+      isContextMenuHidden = false;
     }
   };
 
   const handleClick = (event: MouseEvent) => {
-    if (!trackRef || !trackRef.contains(event?.target as Node)) isHidden = true;
+    if (!trackRef || !trackRef.contains(event?.target as Node)) {
+      isContextMenuHidden = true;
+      isActionsMenuHidden = true;
+    }
   };
 
   onMount(() => {
@@ -118,102 +111,35 @@
       {msToTime(track.duration_ms)}
     </span>
   </div>
-  {#if userPlaylists}
-    <ul
-      class="track-list-item__menu"
-      style="top: {menuY}px; left: {menuX}px"
-      aria-hidden={isHidden}
+  <div class="track-list-item__column">
+    <Button
+      element="button"
+      variant="icon-ghost"
+      on:click={() => (isActionsMenuHidden = !isActionsMenuHidden)}
     >
-      <li class="track-list-item__menu__item has-submenu">
-        <span>
-          Add to playlist
-          <IconCaretRightFilled size={16} />
-        </span>
-        <ul class="track-list-item__submenu">
-          {#each userPlaylists as playlist}
-            <li class="track-list-item__submenu__item">
-              <form
-                method="POST"
-                action="/playlist/{playlist.id}?/addTrack&redirect={$page.url.pathname}"
-                use:enhance={({ cancel }) => {
-                  if (tracksBeingAddedToPlaylist.includes(track.id)) cancel();
-                  tracksBeingAddedToPlaylist = [...tracksBeingAddedToPlaylist, track.id];
-                  return ({ result }) => {
-                    if (result.type === 'error') {
-                      addToast('error', result.error.message);
-                    }
-                    if (result.type === 'redirect') {
-                      const url = new URL(`${$page.url.origin}${result.location}`);
-                      const successMessage = url.searchParams.get('success');
-                      const errorMessage = url.searchParams.get('error');
-                      if (successMessage) addToast('success', successMessage);
-                      if (errorMessage) addToast('error', errorMessage);
-                      invalidateAll();
-                    }
-                    tracksBeingAddedToPlaylist = tracksBeingAddedToPlaylist.filter(
-                      (id) => id !== track.id
-                    );
-                  };
-                }}
-              >
-                <input hidden value={track.id} name="track-id" />
-                <Button
-                  element="button"
-                  variant="text"
-                  aria-label="Add {track.name} to {playlist.name} playlist"
-                  disabled={tracksBeingAddedToPlaylist.includes(track.id)}
-                >
-                  {playlist.name}
-                </Button>
-              </form>
-            </li>
-          {/each}
-        </ul>
-      </li>
-      {#if isOwner}
-        <li class="track-list-item__menu__item">
-          <form
-            method="POST"
-            action="/playlist/{$page.params.id}?/removeTrack"
-            use:enhance={({ cancel }) => {
-              if (tracksBeingRemovedFromPlaylist.includes(track.id)) cancel();
-              tracksBeingRemovedFromPlaylist = [...tracksBeingRemovedFromPlaylist, track.id];
-              return async ({ result }) => {
-                if (result.type === 'error') {
-                  addToast('error', result.error.message);
-                }
-                if (result.type === 'redirect') {
-                  const url = new URL(`${$page.url.origin}${result.location}`);
-                  const successMessage = url.searchParams.get('success');
-                  const errorMessage = url.searchParams.get('error');
-                  if (successMessage) addToast('success', successMessage);
-                  if (errorMessage) addToast('error', errorMessage);
-                  invalidateAll();
-                }
-                tracksBeingRemovedFromPlaylist.filter((id) => id !== track.id);
-              };
-            }}
-          >
-            <input hidden value={track.id} name="track-id" />
-            <Button
-              element="button"
-              variant="text"
-              aria-label="Remove {track.name} from playlist"
-              disabled={tracksBeingRemovedFromPlaylist.includes(track.id)}
-            >
-              Remove from playlist
-            </Button>
-          </form>
-        </li>
-      {/if}
-    </ul>
-  {/if}
+      <IconDots size={20} />
+    </Button>
+    <TrackListItemMenu
+      {track}
+      {userPlaylists}
+      {isOwner}
+      position="left center"
+      bind:isHidden={isActionsMenuHidden}
+    />
+  </div>
+  <TrackListItemMenu
+    {track}
+    {userPlaylists}
+    {isOwner}
+    position={contextMenuPosition}
+    bind:isHidden={isContextMenuHidden}
+  />
 </li>
 
 <style lang="scss">
   .track-list-item {
     display: grid;
-    grid-template-columns: 2rem 4fr 2.125rem;
+    grid-template-columns: 2rem 4fr 2.125rem 2.25rem;
     column-gap: 1.25rem;
     align-items: center;
     padding: 0.25rem 1rem 0.25rem 0.75rem;
@@ -273,97 +199,31 @@
     }
 
     &__column {
-      display: grid;
-      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-items: center;
+      align-items: center;
 
-      &:first-child,
-      &:nth-child(3) {
-        justify-items: center;
-        align-items: center;
+      &:nth-child(2) {
+        align-items: initial;
+      }
+
+      &:nth-child(4) {
+        position: relative;
       }
     }
 
     &__number {
-      grid-column: 1/1;
-      grid-row: 1;
       color: var(--gray-300);
 
       & + :global(.button) {
         display: none;
-        grid-column: 1/1;
-        grid-row: 1;
       }
     }
 
     &__animation {
       display: none;
-      grid-column: 1/1;
-      grid-row: 1;
-      width: 1.25rem;
-    }
-
-    &__menu,
-    &__submenu {
-      min-width: 12rem;
-      padding: 0.25rem;
-      border-radius: 0.25rem;
-      background-color: var(--gray-850);
-      box-shadow:
-        0 0 1px rgba(0, 0, 0, 0.16),
-        0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
-
-      &__item {
-        border-radius: 0.125rem;
-
-        span,
-        :global(.button) {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 0.5rem 0.75rem;
-          white-space: nowrap;
-          position: relative;
-        }
-
-        &:focus-within,
-        &:hover {
-          background-color: var(--gray-750);
-
-          .track-list-item__submenu {
-            display: block;
-          }
-        }
-
-        &.has-submenu {
-          span,
-          :global(.button) {
-            padding: 0.5rem 0.5rem 0.5rem 0.75rem;
-          }
-        }
-      }
-    }
-
-    &__menu {
-      position: absolute;
-      list-style: none;
-      z-index: 1;
-
-      &[aria-hidden='true'] {
-        display: none;
-      }
-
-      &[aria-hidden='false'] {
-        display: block;
-      }
-    }
-
-    &__submenu {
-      display: none;
-      position: absolute;
-      top: 50%;
-      left: calc(100% - 0.25rem);
-      transform: translateY(-50%);
-      list-style: none;
+      width: 1rem;
     }
 
     &__explicit {
@@ -410,10 +270,10 @@
       &:hover,
       &.is-active {
         .track-list-item__number {
-          opacity: 1;
+          display: block;
 
           & + :global(.button) {
-            opacity: 0;
+            display: none;
           }
         }
       }
@@ -424,9 +284,18 @@
         gap: 1rem;
       }
 
+      &__column:nth-child(4) {
+        &:focus-within :global(.track-list-item__menu) {
+          display: block;
+        }
+      }
+
       &__player {
         display: initial;
         max-width: 32%;
+        height: 2.5rem;
+        border-radius: 1.25rem;
+        background-color: black;
       }
     }
   }
