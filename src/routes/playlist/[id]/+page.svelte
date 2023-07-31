@@ -102,6 +102,7 @@
             if (result.type === 'success') {
               await applyAction(result);
               isFollowing = !isFollowing;
+              invalidateAll();
             } else if (result.type === 'failure') {
               addToast('error', result.data?.followError);
             } else {
