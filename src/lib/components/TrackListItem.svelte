@@ -1,6 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { IconDots, IconPlayerPauseFilled, IconPlayerPlayFilled } from '@tabler/icons-svelte';
+  import {
+    IconDots,
+    IconMusic,
+    IconPlayerPauseFilled,
+    IconPlayerPlayFilled,
+  } from '@tabler/icons-svelte';
 
   import { navigation, setActiveTrack, setPaused } from '$stores/navigation';
   import msToTime from '$helpers/ms-to-time';
@@ -92,6 +97,13 @@
   <div class="track-list-item__column">
     <audio class="track-list-item__player" src={track.preview_url} controls />
     <div class="track-list-item__info">
+      {#if track.album.images.length > 0}
+        <img class="track-list-item__image" src={track.album.images[0].url} alt={track.name} />
+      {:else}
+        <div class="track-list-item__image-placeholder">
+          <IconMusic size={24} />
+        </div>
+      {/if}
       <span class="track-list-item__name">
         {track.name}
         {#if track.explicit}
@@ -140,7 +152,7 @@
   .track-list-item {
     display: grid;
     grid-template-columns: 2rem 4fr 2.125rem 2.25rem;
-    column-gap: 1.25rem;
+    column-gap: 0.75rem;
     align-items: center;
     padding: 0.25rem 1rem 0.25rem 0.75rem;
     border-radius: 0.25rem;
@@ -224,6 +236,29 @@
     &__animation {
       display: none;
       width: 1rem;
+    }
+
+    &__info {
+      display: grid;
+      grid-template-columns: 2.5rem auto;
+      column-gap: 1rem;
+      align-items: center;
+    }
+
+    &__image {
+      grid-row: 1/3;
+      border-radius: 0.25rem;
+    }
+
+    &__image-placeholder {
+      grid-row: 1/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 0.25rem;
+      background-color: var(--gray-700);
     }
 
     &__explicit {

@@ -35,7 +35,7 @@
     &__labels {
       display: grid;
       grid-template-columns: 2rem 4fr 2.125rem 2.25rem;
-      column-gap: 1.25rem;
+      column-gap: 0.75rem;
       align-items: center;
       padding: 0.25rem 1rem 0.25rem 0.75rem;
       margin-bottom: 1rem;
