@@ -1,5 +1,6 @@
 <script lang="ts">
   import {
+    IconMusic,
     IconPlayerPauseFilled,
     IconPlayerPlayFilled,
     IconVolume,
@@ -27,6 +28,17 @@
 <div class="bottom-panel">
   <div class="player">
     <div class="player__column">
+      {#if $navigation.activeTrack && $navigation.activeTrack.album.images.length > 0}
+        <img
+          class="player__song-image"
+          src={$navigation.activeTrack?.album.images[0].url}
+          alt={$navigation.activeTrack?.name}
+        />
+      {:else}
+        <div class="player__song-image-placeholder">
+          <IconMusic size={28} />
+        </div>
+      {/if}
       {#if $navigation.activeTrack}
         <span class="player__song-name">{$navigation.activeTrack?.name}</span>
         <div class="player__song-artists">
@@ -117,6 +129,9 @@
       &:first-child {
         grid-column: 1;
         grid-row: 1;
+        display: grid;
+        grid-template-columns: 3rem auto;
+        column-gap: 0.75rem;
         padding-right: 4rem;
       }
 
@@ -138,6 +153,22 @@
         display: none;
         align-items: end;
       }
+    }
+
+    &__song-image {
+      grid-row: 1/3;
+      border-radius: 0.25rem;
+    }
+
+    &__song-image-placeholder {
+      grid-row: 1/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 0.25rem;
+      background-color: var(--gray-700);
     }
 
     &__song-artists {
