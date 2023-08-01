@@ -11,10 +11,10 @@
 </script>
 
 <ItemPage
-  image={album.images.length > 0 ? album.images[0].url : undefined}
-  {color}
   type={album.album_type}
   title={album.name}
+  image={album.images.length > 0 ? album.images[0].url : undefined}
+  {color}
 >
   <p class="album__meta" slot="meta">
     <span class="album__artists">{album.artists.map((artist) => artist.name).join(', ')}</span>

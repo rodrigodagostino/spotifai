@@ -38,8 +38,10 @@
             isRetrying = true;
             await invalidate(`app:${$page.route.id}`);
             isRetrying = false;
-          }}>Retry</Button
+          }}
         >
+          Retry
+        </Button>
       </div>
     {/if}
   </div>

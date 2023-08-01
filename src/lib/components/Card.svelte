@@ -1,6 +1,8 @@
 <script lang="ts">
   import { IconMusic } from '@tabler/icons-svelte';
 
+  import formatFollowers from '$helpers/format-followers';
+
   type AlbumType = SpotifyApi.AlbumObjectFull | SpotifyApi.AlbumObjectSimplified;
   type PlaylistType = SpotifyApi.PlaylistObjectFull | SpotifyApi.PlaylistObjectSimplified;
   type ArtistType = SpotifyApi.ArtistObjectFull;
@@ -8,7 +10,7 @@
   export let item: AlbumType | PlaylistType | ArtistType;
 </script>
 
-<div class="card">
+<div class="card" class:card--artist={item.type === 'artist'}>
   {#if item.images?.length > 0}
     <img
       class="card__image"
@@ -27,6 +29,8 @@
       <p class="card__artists">{item.artists.map((artist) => artist.name).join(', ')}</p>
     {:else if item.type === 'playlist'}
       <p class="card__description">{item.description}</p>
+    {:else if item.type === 'artist'}
+      <p class="card__followers">{formatFollowers.format(item.followers.total || 0)} followers</p>
     {/if}
   </div>
 </div>
@@ -42,12 +46,24 @@
     transition: background-color 0.24s;
     position: relative;
 
+    &--artist {
+      text-align: center;
+
+      .card__image,
+      .card__image-placeholder {
+        border-radius: 50%;
+      }
+    }
+
     &:focus,
     &:hover {
       background-color: var(--gray-800);
     }
 
-    &__image {
+    &__image,
+    &__image-placeholder {
+      aspect-ratio: 1;
+      object-fit: cover;
       border-radius: 0.25rem;
     }
 
@@ -56,8 +72,6 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      aspect-ratio: 1;
-      border-radius: 0.25rem;
       background-color: var(--gray-700);
     }
 
@@ -89,7 +103,8 @@
     }
 
     &__artists,
-    &__description {
+    &__description,
+    &__followers {
       margin-top: 0.25rem;
       display: -webkit-box;
       -webkit-line-clamp: 2;

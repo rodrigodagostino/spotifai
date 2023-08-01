@@ -2,16 +2,22 @@
   import { IconMusic } from '@tabler/icons-svelte';
   import { camelCase, startCase } from 'lodash';
 
-  export let image: string | undefined;
-  export let color: string | null;
   export let type: string | undefined;
   export let title: string;
+  export let image: string | undefined;
+  export let color: string | null;
 </script>
 
 <div class="item-page" style="background-color: {color}">
   <header class="item-page__header">
     {#if image}
-      <img class="item-page__image" src={image} alt={title} loading="lazy" />
+      <img
+        class="item-page__image"
+        class:is-rounded={type === 'user'}
+        src={image}
+        alt={title}
+        loading="lazy"
+      />
     {:else}
       <div class="item-page__image-placeholder"><IconMusic size={80} /></div>
     {/if}
@@ -69,6 +75,12 @@
       width: 14.5rem;
       height: 14.5rem;
       box-shadow: 0 0.25rem 3.75rem rgba(0, 0, 0, 0.5);
+    }
+
+    &__image {
+      &.is-rounded {
+        border-radius: 50%;
+      }
     }
 
     &__image-placeholder {

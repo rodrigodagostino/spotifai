@@ -8,6 +8,7 @@
   import { invalidateAll } from '$app/navigation';
   import { page } from '$app/stores';
   import { addToast } from '$stores/toasts';
+  import formatFollowers from '$helpers/format-followers';
   import ItemPage from '$components/ItemPage.svelte';
   import TrackList from '$components/TrackList.svelte';
   import Button from '$components/Button.svelte';
@@ -36,10 +37,6 @@
     });
   }
 
-  const formatFollowers = Intl.NumberFormat('en', {
-    notation: 'compact',
-  });
-
   const loadMore = async () => {
     if (!tracks.next) return;
 
@@ -61,10 +58,10 @@
 </script>
 
 <ItemPage
-  image={playlist.images.length > 0 ? playlist.images[0].url : undefined}
-  {color}
   type={playlist.type}
   title={playlist.name}
+  image={playlist.images.length > 0 ? playlist.images[0].url : undefined}
+  {color}
 >
   <p slot="description" class="playlist__description">{@html playlist.description}</p>
   <p slot="meta" class="playlist__meta">
@@ -227,6 +224,10 @@
     &__description {
       margin-top: 1rem;
       color: var(--gray-300);
+
+      &:empty {
+        display: none;
+      }
     }
 
     &__meta {

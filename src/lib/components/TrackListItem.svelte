@@ -247,7 +247,6 @@
 
     &__image {
       grid-row: 1/3;
-      border-radius: 0.25rem;
     }
 
     &__image-placeholder {
@@ -257,7 +256,6 @@
       justify-content: center;
       width: 100%;
       aspect-ratio: 1;
-      border-radius: 0.25rem;
       background-color: var(--gray-700);
     }
 
