@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 interface INavigation {
   isMenuOpen: boolean;
-  activeTrack: SpotifyApi.TrackObjectFull | null;
+  activeTrack: SpotifyApi.TrackObjectFull | SpotifyApi.TrackObjectSimplified | null;
   paused: boolean;
 }
 

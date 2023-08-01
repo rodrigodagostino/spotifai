@@ -3,12 +3,13 @@
   import { IconPlus } from '@tabler/icons-svelte';
 
   import { addToast } from '$stores/toasts';
-  import Button from '$components/Button.svelte';
+  import type { ActionData } from './add/$types';
+  import CardList from '$components/CardList.svelte';
   import Card from '$components/Card.svelte';
+  import Button from '$components/Button.svelte';
   import Pagination from '$components/Pagination.svelte';
   import Modal from '$components/Modal.svelte';
   import PlaylistForm from '$components/PlaylistForm.svelte';
-  import type { ActionData } from './add/$types';
 
   export let data;
   export let form: ActionData;
@@ -54,11 +55,11 @@
     </Button>
   </header>
   {#if playlists.items.length > 0}
-    <div class="playlists-page__content">
+    <CardList>
       {#each playlists.items as playlist (playlist.id)}
         <Card item={playlist} />
       {/each}
-    </div>
+    </CardList>
     <Pagination paginatedList={playlists} {isLoadingMore} on:loadMore={loadMore} />
   {:else}
     <div class="playlists-page__no-playlists">
@@ -78,72 +79,9 @@
       justify-content: space-between;
     }
 
-    &__content {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-gap: 1.25rem;
-      margin-top: 2rem;
-    }
-
     &__no-playlists {
       padding-top: 2rem;
       text-align: center;
-    }
-  }
-
-  @media (min-width: 28rem) {
-    .playlists-page {
-      &__content {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 42rem) {
-    .playlists-page {
-      &__content {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 50rem) {
-    .playlists-page {
-      &__content {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 62.5rem) {
-    .playlists-page {
-      &__content {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 76rem) {
-    .playlists-page {
-      &__content {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 90rem) {
-    .playlists-page {
-      &__content {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 100rem) {
-    .playlists-page {
-      &__content {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-      }
     }
   }
 </style>

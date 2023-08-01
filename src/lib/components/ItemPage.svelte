@@ -97,6 +97,7 @@
     &__title {
       font-size: 3.5rem;
       line-height: 1;
+      margin-bottom: 1rem;
     }
 
     &__content {
@@ -130,6 +131,7 @@
 
       &__title {
         font-size: 6rem;
+        margin-bottom: 2rem;
       }
     }
   }

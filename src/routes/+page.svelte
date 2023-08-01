@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import { setIsMenuOpen, navigation } from '$stores/navigation';
   import Card from '$components/Card.svelte';
+  import CardList from '$components/CardList.svelte';
 
   export let data: PageData;
 
@@ -72,11 +73,11 @@
           <h2 class="home__section__title">{section.title}</h2>
           <a href={section.path}>Show all <span class="sr-only">from {section.title}</span></a>
         </header>
-        <div class="home__section__content">
+        <CardList>
           {#each section.items as item}
             <Card {item} />
           {/each}
-        </div>
+        </CardList>
       </section>
     {/each}
   </div>
@@ -100,68 +101,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-
-    &__section__content {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-gap: 1.25rem;
-    }
-  }
-
-  @media (min-width: 28rem) {
-    .home {
-      &__section__content {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 42rem) {
-    .home {
-      &__section__content {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 50rem) {
-    .home {
-      &__section__content {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 62.5rem) {
-    .home {
-      &__section__content {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 76rem) {
-    .home {
-      &__section__content {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 90rem) {
-    .home {
-      &__section__content {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 100rem) {
-    .home {
-      &__section__content {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-      }
     }
   }
 </style>

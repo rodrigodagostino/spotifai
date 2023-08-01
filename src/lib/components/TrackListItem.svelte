@@ -16,6 +16,7 @@
   export let index: number;
   export let currentIndex: number;
   export let type:
+    | SpotifyApi.AlbumObjectFull['album_type']
     | SpotifyApi.AlbumObjectSimplified['album_type']
     | SpotifyApi.PlaylistBaseObject['type'];
   export let track: SpotifyApi.TrackObjectFull | SpotifyApi.TrackObjectSimplified;
@@ -96,25 +97,31 @@
   </div>
   <div class="track-list-item__column">
     <audio class="track-list-item__player" src={track.preview_url} controls />
-    <div class="track-list-item__info">
-      {#if track.album.images.length > 0}
-        <img class="track-list-item__image" src={track.album.images[0].url} alt={track.name} />
-      {:else}
-        <div class="track-list-item__image-placeholder">
-          <IconMusic size={24} />
+    <div class="track-list-item__details">
+      {#if type !== 'album'}
+        <div class="track-list-item__column">
+          {#if 'album' in track && track.album.images.length > 0}
+            <img class="track-list-item__image" src={track.album.images[0].url} alt={track.name} />
+          {:else}
+            <div class="track-list-item__image-placeholder">
+              <IconMusic size={24} />
+            </div>
+          {/if}
         </div>
       {/if}
-      <span class="track-list-item__name">
-        {track.name}
-        {#if track.explicit}
-          <span class="track-list-item__explicit">Explicit</span>
-        {/if}
-      </span>
-      <div class="track-list-item__artists">
-        {#each track.artists as artist, i}
-          <a href="/artist/{artist.id}" class="track-list-item__artist">{artist.name}</a>
-          {#if i < track.artists.length - 1}<span>,&nbsp;</span>{/if}
-        {/each}
+      <div class="track-list-item__column">
+        <span class="track-list-item__name">
+          {track.name}
+          {#if track.explicit}
+            <span class="track-list-item__explicit">Explicit</span>
+          {/if}
+        </span>
+        <div class="track-list-item__artists">
+          {#each track.artists as artist, i}
+            <a href="/artist/{artist.id}" class="track-list-item__artist">{artist.name}</a>
+            {#if i < track.artists.length - 1}<span>,&nbsp;</span>{/if}
+          {/each}
+        </div>
       </div>
     </div>
   </div>
@@ -238,23 +245,25 @@
       width: 1rem;
     }
 
-    &__info {
-      display: grid;
-      grid-template-columns: 2.5rem auto;
+    &__details {
+      display: flex;
       column-gap: 1rem;
       align-items: center;
+
+      .track-list-item__column {
+        align-items: start;
+      }
     }
 
-    &__image {
-      grid-row: 1/3;
+    &__image,
+    &__image-placeholder {
+      width: 2.5rem;
     }
 
     &__image-placeholder {
-      grid-row: 1/3;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
       aspect-ratio: 1;
       background-color: var(--gray-700);
     }

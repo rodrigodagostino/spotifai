@@ -2,6 +2,7 @@
   import type { PageData } from './$types';
   import formatFollowers from '$helpers/format-followers';
   import ItemPage from '$components/ItemPage.svelte';
+  import CardList from '$components/CardList.svelte';
   import Card from '$components/Card.svelte';
   import Button from '$components/Button.svelte';
   import { invalidate } from '$app/navigation';
@@ -49,11 +50,11 @@
       <header class="profile-page__section__header">
         <h2 class="profile-page__section__title">Following</h2>
       </header>
-      <div class="profile-page__section__content">
+      <CardList>
         {#each following.artists.items as artist (artist.id)}
           <Card item={artist} />
         {/each}
-      </div>
+      </CardList>
       <div class="profile-page__section__view-all">
         <Button element="a" href="/profile/artists" variant="secondary-outline">
           View all<span class="sr-only">the artists you are following</span>
@@ -65,6 +66,10 @@
 
 <style lang="scss">
   .profile-page {
+    &__meta {
+      margin-top: 0.5rem;
+    }
+
     &__error {
       height: 100%;
       display: flex;
@@ -75,72 +80,15 @@
       text-align: center;
     }
 
-    &__section__content {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-gap: 1.25rem;
-      margin-top: 2rem;
+    &__section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
     }
 
     &__section__view-all {
-      margin-top: 2rem;
+      margin-top: 0.75rem;
       text-align: center;
-    }
-  }
-
-  @media (min-width: 28rem) {
-    .profile-page {
-      &__section__content {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 42rem) {
-    .profile-page {
-      &__section__content {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 50rem) {
-    .profile-page {
-      &__section__content {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 62.5rem) {
-    .profile-page {
-      &__section__content {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 76rem) {
-    .profile-page {
-      &__section__content {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 90rem) {
-    .profile-page {
-      &__section__content {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-      }
-    }
-  }
-
-  @media (min-width: 100rem) {
-    .profile-page {
-      &__section__content {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-      }
     }
   }
 </style>

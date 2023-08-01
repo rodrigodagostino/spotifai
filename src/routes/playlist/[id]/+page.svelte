@@ -74,6 +74,7 @@
       {playlist.tracks.total === 1 ? 'song' : 'songs'}
     </span>
   </p>
+
   <div class="playlist__actions">
     {#if data.user?.id === playlist.owner.id}
       <Button
@@ -222,7 +223,6 @@
 
   .playlist {
     &__description {
-      margin-top: 1rem;
       color: var(--gray-300);
 
       &:empty {
@@ -327,10 +327,6 @@
 
   @media (min-width: 50rem) {
     .playlist {
-      &__description {
-        margin-top: 2rem;
-      }
-
       &__meta {
         justify-content: initial;
       }
