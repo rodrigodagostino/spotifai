@@ -4,7 +4,7 @@
 
   import { addToast } from '$stores/toasts';
   import type { ActionData } from './add/$types';
-  import CardList from '$components/CardList.svelte';
+  import Grid from '$components/Grid.svelte';
   import Card from '$components/Card.svelte';
   import Button from '$components/Button.svelte';
   import Pagination from '$components/Pagination.svelte';
@@ -55,11 +55,11 @@
     </Button>
   </header>
   {#if playlists.items.length > 0}
-    <CardList>
+    <Grid>
       {#each playlists.items as playlist (playlist.id)}
         <Card item={playlist} />
       {/each}
-    </CardList>
+    </Grid>
     <Pagination paginatedList={playlists} {isLoadingMore} on:loadMore={loadMore} />
   {:else}
     <div class="playlists-page__no-playlists">

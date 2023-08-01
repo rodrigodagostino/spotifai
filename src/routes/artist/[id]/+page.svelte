@@ -3,8 +3,8 @@
   import ItemPage from '$components/ItemPage.svelte';
   import formatFollowers from '$helpers/format-followers';
   import TrackList from '$components/TrackList.svelte';
+  import Grid from '$components/Grid.svelte';
   import Card from '$components/Card.svelte';
-  import CardList from '$components/CardList.svelte';
   import Button from '$components/Button.svelte';
 
   export let data: PageData;
@@ -55,11 +55,11 @@
           <span class="sr-only">albums</span>
         </Button>
       </header>
-      <CardList>
+      <Grid>
         {#each albums.items as item}
           <Card {item} />
         {/each}
-      </CardList>
+      </Grid>
     </section>
   {/if}
 
@@ -72,11 +72,11 @@
           <span class="sr-only">appearances</span>
         </Button>
       </header>
-      <CardList>
+      <Grid>
         {#each appearsOn.items as item}
           <Card {item} />
         {/each}
-      </CardList>
+      </Grid>
     </section>
   {/if}
 
@@ -89,11 +89,11 @@
           <span class="sr-only">related artists</span>
         </Button>
       </header>
-      <CardList>
+      <Grid>
         {#each relatedArtists.artists as item}
           <Card {item} />
         {/each}
-      </CardList>
+      </Grid>
     </section>
   {/if}
 </ItemPage>

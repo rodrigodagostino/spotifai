@@ -2,7 +2,7 @@
   import type { PageData } from './$types';
   import formatFollowers from '$helpers/format-followers';
   import ItemPage from '$components/ItemPage.svelte';
-  import CardList from '$components/CardList.svelte';
+  import Grid from '$components/Grid.svelte';
   import Card from '$components/Card.svelte';
   import Button from '$components/Button.svelte';
   import { invalidate } from '$app/navigation';
@@ -50,11 +50,11 @@
       <header class="profile-page__section__header">
         <h2 class="profile-page__section__title">Following</h2>
       </header>
-      <CardList>
+      <Grid>
         {#each following.artists.items as artist (artist.id)}
           <Card item={artist} />
         {/each}
-      </CardList>
+      </Grid>
       <div class="profile-page__section__view-all">
         <Button element="a" href="/profile/artists" variant="secondary-outline">
           View all<span class="sr-only">the artists you are following</span>

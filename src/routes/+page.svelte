@@ -2,8 +2,8 @@
   import type { PageData } from './$types';
   import { onMount } from 'svelte';
   import { setIsMenuOpen, navigation } from '$stores/navigation';
+  import Grid from '$components/Grid.svelte';
   import Card from '$components/Card.svelte';
-  import CardList from '$components/CardList.svelte';
 
   export let data: PageData;
 
@@ -73,11 +73,11 @@
           <h2 class="home__section__title">{section.title}</h2>
           <a href={section.path}>Show all <span class="sr-only">from {section.title}</span></a>
         </header>
-        <CardList>
+        <Grid>
           {#each section.items as item}
             <Card {item} />
           {/each}
-        </CardList>
+        </Grid>
       </section>
     {/each}
   </div>
