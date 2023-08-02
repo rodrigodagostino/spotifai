@@ -4,7 +4,7 @@ import fetchRefresh from '$helpers/fetch-refresh';
 export const load: PageLoad = async ({ fetch, parent }) => {
   const { user } = await parent();
 
-  const followingRequest = fetchRefresh(fetch, '/api/spotify/me/following?type=artist&limit=6');
+  const followingRequest = fetchRefresh(fetch, '/api/spotify/me/following?type=artist&limit=7');
 
   let colorRequest;
 

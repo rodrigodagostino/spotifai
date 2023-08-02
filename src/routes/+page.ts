@@ -4,9 +4,9 @@ import type { PageLoad } from './$types';
 export const load: PageLoad = async ({ fetch, parent }) => {
   const { user } = await parent();
 
-  const newReleases = fetchRefresh(fetch, 'api/spotify/browse/new-releases?limit=6');
-  const featuredPlaylists = fetchRefresh(fetch, '/api/spotify/browse/featured-playlists?limit=6');
-  const userPlaylists = fetchRefresh(fetch, `/api/spotify/users/${user?.id}/playlists?limit=6`);
+  const newReleases = fetchRefresh(fetch, 'api/spotify/browse/new-releases?limit=7');
+  const featuredPlaylists = fetchRefresh(fetch, '/api/spotify/browse/featured-playlists?limit=7');
+  const userPlaylists = fetchRefresh(fetch, `/api/spotify/users/${user?.id}/playlists?limit=7`);
 
   const categoriesResponse = await fetchRefresh(fetch, '/api/spotify/browse/categories');
   const categoriesResponseJSON: SpotifyApi.MultipleCategoriesResponse | undefined =
@@ -16,7 +16,7 @@ export const load: PageLoad = async ({ fetch, parent }) => {
     ? categoriesResponseJSON.categories.items.sort(() => 0.5 - Math.random()).slice(0, 3)
     : [];
   const randomCategoriesPromises = randomCategories.map((category) =>
-    fetchRefresh(fetch, `/api/spotify/browse/categories/${category.id}/playlists?limit=6`)
+    fetchRefresh(fetch, `/api/spotify/browse/categories/${category.id}/playlists?limit=7`)
   );
 
   const [

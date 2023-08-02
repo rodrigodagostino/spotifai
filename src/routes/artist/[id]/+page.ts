@@ -28,8 +28,8 @@ export const load: PageLoad = async ({ fetch: _fetch, params, parent, depends, r
     colorResponse,
   ] = await Promise.all([
     fetch(`/api/spotify/artists/${params.id}/top-tracks?market=${user?.country || 'US'}`),
-    fetch(`/api/spotify/artists/${params.id}/albums?limit=6&include_groups=album,single`),
-    fetch(`/api/spotify/artists/${params.id}/albums?limit=6&include_groups=appears_on`),
+    fetch(`/api/spotify/artists/${params.id}/albums?limit=7&include_groups=album,single`),
+    fetch(`/api/spotify/artists/${params.id}/albums?limit=7&include_groups=appears_on`),
     fetch(`/api/spotify/artists/${params.id}/related-artists`),
     colorRequest,
   ]);
