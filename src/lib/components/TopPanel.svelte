@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { IconMenu2 } from '@tabler/icons-svelte';
+  import { IconMenu2, IconSearch } from '@tabler/icons-svelte';
 
   import { page } from '$app/stores';
   import { setIsMenuOpen, navigation } from '$stores/navigation';
+  import SearchForm from './SearchForm.svelte';
   import Button from './Button.svelte';
   import TopPanelProfile from './TopPanelProfile.svelte';
 
@@ -14,6 +15,9 @@
     <span class="sr-only">{$navigation.isMenuOpen ? 'Close menu' : 'Open menu'}</span>
     <IconMenu2 size={32} />
   </Button>
+  {#if $page.url.pathname.startsWith('/search')}
+    <SearchForm></SearchForm>
+  {/if}
   <TopPanelProfile {user} />
 </header>
 
@@ -24,7 +28,12 @@
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+    width: 100%;
     z-index: 20;
+
+    :global(.search-form) {
+      display: none;
+    }
   }
 
   :global(.no-js) {
@@ -43,11 +52,16 @@
       grid-column: 2/3;
       grid-row: 1/2;
       justify-content: end;
-      padding-right: 1.5rem;
+      padding: 0 1.5rem;
       border-radius: 0.5rem 0.5rem 0 0;
 
       & > :global(.button) {
         display: none;
+      }
+
+      :global(.search-form) {
+        display: block;
+        max-width: 50%;
       }
     }
 

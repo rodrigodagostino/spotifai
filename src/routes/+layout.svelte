@@ -12,6 +12,7 @@
   import SidePanel from '$components/SidePanel.svelte';
   import SidePanelBottom from '$components/SidePanelBottom.svelte';
   import BottomPanel from '$components/BottomPanel.svelte';
+  import SearchForm from '$components/SearchForm.svelte';
   import Toasts from '$components/Toasts.svelte';
   import Button from '$components/Button.svelte';
   import './styles.css';
@@ -56,6 +57,9 @@
   {/if}
   <main class="page-main" id="main" inert={$navigation.isMenuOpen}>
     <div class="page-main__inner">
+      {#if $page.url.pathname.startsWith('/search')}
+        <SearchForm />
+      {/if}
       <slot />
     </div>
   </main>
@@ -131,16 +135,24 @@
         background: rgba(0, 0, 0, 0.16);
       }
     }
+
+    :global(.search-form) {
+      margin-bottom: 2rem;
+    }
   }
 
   @media (min-width: 50rem) {
     .page__inner {
-      grid-template-columns: 0.5fr 1fr;
+      grid-template-columns: 1fr 2fr;
     }
 
     .page-main {
       grid-column: 2/3;
       grid-row: 1/3;
+
+      :global(.search-form) {
+        display: none;
+      }
     }
   }
 
