@@ -28,7 +28,7 @@
 <div class="bottom-panel">
   <div class="player">
     <div class="player__column">
-      {#if $navigation.activeTrack && $navigation.activeTrack.album.images.length > 0}
+      {#if $navigation.activeTrack && 'album' in $navigation.activeTrack && $navigation.activeTrack.album.images.length > 0}
         <img
           class="player__song-image"
           src={$navigation.activeTrack?.album.images[0].url}
@@ -73,7 +73,9 @@
         </Button>
       </div>
       <div class="player__progress">
-        <span class="player__current-time">{formatTime(currentTime, 'time')}</span>
+        <span class="player__current-time">
+          {formatTime(currentTime, 'time')}
+        </span>
         <input
           class="player__track"
           type="range"
@@ -82,8 +84,9 @@
           max={duration.toFixed(0)}
           step="0.01"
         />
-        <span class="player__duration">{duration ? formatTime(duration, 'duration') : '--:--'}</span
-        >
+        <span class="player__duration">
+          {duration ? formatTime(duration, 'duration') : '--:--'}
+        </span>
       </div>
     </div>
     <div class="player__column">
@@ -119,7 +122,7 @@
     grid-template-columns: 1fr;
     column-gap: 1.25rem;
     align-items: center;
-    padding: 0 0.5rem 0.5rem;
+    padding: 0.5rem;
 
     &__column {
       display: flex;
@@ -303,6 +306,10 @@
   }
 
   @media (min-width: 50em) {
+    .bottom-panel {
+      grid-row: 3;
+    }
+
     .player {
       grid-template-columns: 3fr 4fr 3fr;
 
