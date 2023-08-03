@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { IconSearch, IconX } from '@tabler/icons-svelte';
+
   import { afterNavigate } from '$app/navigation';
   import { page } from '$app/stores';
-  import { IconSearch } from '@tabler/icons-svelte';
+  import Button from './Button.svelte';
 
   let inputRef: HTMLInputElement;
 
@@ -11,6 +13,9 @@
 </script>
 
 <form action="/search" method="GET" role="search" class="search-form">
+  <Button element="button" variant="icon-ghost">
+    <IconSearch size={24} />
+  </Button>
   <input
     bind:this={inputRef}
     type="text"
@@ -20,9 +25,11 @@
     class="search-form__input"
     required
   />
-  <button type="submit" class="search-form__button">
-    <IconSearch size={24} />
-  </button>
+  {#if query.trim() !== ''}
+    <Button element="a" href="/search" variant="icon-ghost">
+      <IconX size={18} />
+    </Button>
+  {/if}
 </form>
 
 <style lang="scss">
@@ -34,7 +41,7 @@
     &__input {
       max-width: 100%;
       height: 3rem;
-      padding: 0 2rem 0 3rem;
+      padding: 0 3rem;
       border: none;
       border-radius: 1.5rem;
       background-color: var(--gray-850);
@@ -51,14 +58,18 @@
       }
     }
 
-    &__button {
-      display: flex;
+    :global(.button) {
       position: absolute;
       top: 50%;
-      left: 0;
       transform: translateY(-50%);
-      border: none;
-      color: var(--white);
+
+      &:first-child {
+        left: 0.25rem;
+      }
+
+      &:last-child {
+        right: 0.25rem;
+      }
     }
   }
 </style>
