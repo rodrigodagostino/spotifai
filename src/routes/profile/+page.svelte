@@ -56,7 +56,7 @@
         {/each}
       </Grid>
       <div class="profile-page__section__view-all">
-        <Button element="a" href="/profile/artists" variant="secondary-outline">
+        <Button element="a" href="/profile/following" variant="secondary-outline">
           View all<span class="sr-only">the artists you are following</span>
         </Button>
       </div>
