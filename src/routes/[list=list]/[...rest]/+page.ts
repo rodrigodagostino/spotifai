@@ -7,7 +7,7 @@ export const load: PageLoad = async ({ fetch: _fetch, url, params, depends, rout
   const fetch = (path: string) => fetchRefresh(_fetch, path);
 
   const { list, rest } = params;
-  const limit = 18;
+  const limit = 21;
   const page = url.searchParams.get('page');
 
   const searchParams = new URLSearchParams({

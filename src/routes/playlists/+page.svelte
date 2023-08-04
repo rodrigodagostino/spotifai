@@ -74,6 +74,10 @@
 
 <style lang="scss">
   .playlists-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
     &__header {
       display: flex;
       justify-content: space-between;

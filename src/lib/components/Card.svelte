@@ -40,6 +40,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    width: 100%;
     padding: 1rem;
     border-radius: 0.5rem;
     background-color: var(--gray-900);

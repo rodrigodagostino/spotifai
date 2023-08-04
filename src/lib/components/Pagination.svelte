@@ -5,7 +5,7 @@
   import { page } from '$app/stores';
   import Button from './Button.svelte';
 
-  export let paginatedList: SpotifyApi.PagingObject<any>;
+  export let paginatedList: SpotifyApi.PagingObject<any> | SpotifyApi.CursorBasedPagingObject<any>;
   export let isLoadingMore: boolean;
 
   $: currentPageNumber = $page.url.searchParams.get('page') || 1;
@@ -34,32 +34,34 @@
   </div>
 {/if}
 
-<div class="pagination">
-  {#if paginatedList.previous}
-    <Button
-      element="a"
-      href="{$page.url.pathname}?{new URLSearchParams({
-        page: `${Number(currentPageNumber) - 1}`,
-      }).toString()}"
-      variant="secondary-outline"
-    >
-      <IconArrowLeft size={24} />
-      Previous page
-    </Button>
-  {/if}
-  {#if paginatedList.next}
-    <Button
-      element="a"
-      href="{$page.url.pathname}?{new URLSearchParams({
-        page: `${Number(currentPageNumber) + 1}`,
-      }).toString()}"
-      variant="secondary-outline"
-    >
-      Next page
-      <IconArrowRight size={24} />
-    </Button>
-  {/if}
-</div>
+{#if 'previous' in paginatedList}
+  <div class="pagination">
+    {#if paginatedList.previous}
+      <Button
+        element="a"
+        href="{$page.url.pathname}?{new URLSearchParams({
+          page: `${Number(currentPageNumber) - 1}`,
+        }).toString()}"
+        variant="secondary-outline"
+      >
+        <IconArrowLeft size={24} />
+        Previous page
+      </Button>
+    {/if}
+    {#if paginatedList.next}
+      <Button
+        element="a"
+        href="{$page.url.pathname}?{new URLSearchParams({
+          page: `${Number(currentPageNumber) + 1}`,
+        }).toString()}"
+        variant="secondary-outline"
+      >
+        Next page
+        <IconArrowRight size={24} />
+      </Button>
+    {/if}
+  </div>
+{/if}
 
 <style lang="scss">
   :global(.no-js) {
