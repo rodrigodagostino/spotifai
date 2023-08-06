@@ -11,7 +11,12 @@
 </script>
 
 <div class="top-panel-profile">
-  <Button element="button" variant="icon-ghost" on:click={() => (isMenuExpanded = !isMenuExpanded)}>
+  <Button
+    element="button"
+    variant="dark-solid"
+    padding="narrow"
+    on:click={() => (isMenuExpanded = !isMenuExpanded)}
+  >
     {#if user?.images && user.images.length > 0}
       <img src={user.images[0].url} alt="" />
     {/if}
@@ -27,7 +32,7 @@
         </a>
       </li>
       <li><a href="/profile">View profile</a></li>
-      <li><ButtonLogout variant="text" /></li>
+      <li><ButtonLogout variant="ghost" /></li>
     </ul>
   </nav>
   {#if isMenuExpanded}
@@ -60,12 +65,16 @@
       opacity: 0;
       visibility: hidden;
       z-index: 10;
-      transition: opacity 0.16s, visibility 0s 0.16s;
+      transition:
+        opacity 0.16s,
+        visibility 0s 0.16s;
 
       &[aria-hidden='false'] {
         opacity: 1;
         visibility: visible;
-        transition: opacity 0.16s, visibility 0s;
+        transition:
+          opacity 0.16s,
+          visibility 0s;
       }
 
       ul {

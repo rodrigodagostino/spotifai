@@ -1,17 +1,8 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
-  import Button from './Button.svelte';
+  import Button, { type IButtonVariant } from './Button.svelte';
 
-  export let variant:
-    | 'primary-solid'
-    | 'primary-outline'
-    | 'secondary-solid'
-    | 'secondary-outline'
-    | 'tertiary-solid'
-    | 'tertiary-outline'
-    | 'text'
-    | 'icon-solid'
-    | 'icon-ghost' = 'secondary-solid';
+  export let variant: IButtonVariant = 'secondary-solid';
 </script>
 
 <form

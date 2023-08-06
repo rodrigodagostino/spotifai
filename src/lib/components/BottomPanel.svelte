@@ -61,7 +61,8 @@
       <div class="player__play">
         <Button
           element="button"
-          variant="icon-solid"
+          variant="secondary-solid"
+          padding="medium"
           aria-label={$navigation.paused ? 'Play song' : 'Pause song'}
           on:click={() => ($navigation.paused ? setPaused(false) : setPaused(true))}
         >

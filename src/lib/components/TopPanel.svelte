@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { IconMenu2, IconSearch } from '@tabler/icons-svelte';
+  import { IconMenu2 } from '@tabler/icons-svelte';
 
   import { page } from '$app/stores';
   import { setIsMenuOpen, navigation } from '$stores/navigation';
@@ -11,12 +11,12 @@
 </script>
 
 <header class="top-panel" inert={$navigation.isMenuOpen}>
-  <Button element="button" variant="icon-ghost" on:click={() => setIsMenuOpen(true)}>
+  <Button element="button" variant="ghost" on:click={() => setIsMenuOpen(true)}>
     <span class="sr-only">{$navigation.isMenuOpen ? 'Close menu' : 'Open menu'}</span>
     <IconMenu2 size={32} />
   </Button>
   {#if $page.url.pathname.startsWith('/search')}
-    <SearchForm></SearchForm>
+    <SearchForm />
   {/if}
   <TopPanelProfile {user} />
 </header>

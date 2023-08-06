@@ -1,3 +1,16 @@
+<script lang="ts" context="module">
+  export type IButtonVariant =
+    | 'primary-solid'
+    | 'primary-outline'
+    | 'secondary-solid'
+    | 'secondary-outline'
+    | 'tertiary-solid'
+    | 'tertiary-outline'
+    | 'dark-solid'
+    | 'dark-outline'
+    | 'ghost';
+</script>
+
 <script lang="ts">
   import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
@@ -10,33 +23,24 @@
 
   type $$Props = ButtonElements[Element] & {
     element: Element;
-    variant?:
-      | 'primary-solid'
-      | 'primary-outline'
-      | 'secondary-solid'
-      | 'secondary-outline'
-      | 'tertiary-solid'
-      | 'tertiary-outline'
-      | 'text'
-      | 'icon-solid'
-      | 'icon-ghost';
-    size?: 'small' | 'medium' | 'large';
+    variant?: IButtonVariant;
+    size?: 'tiny' | 'small' | 'medium' | 'large';
+    padding?: 'none' | 'narrow' | 'medium' | 'wide';
   };
 
   export let element: Element;
-  export let variant:
-    | 'primary-solid'
-    | 'primary-outline'
-    | 'secondary-solid'
-    | 'secondary-outline'
-    | 'tertiary-solid'
-    | 'tertiary-outline'
-    | 'text'
-    | 'icon-solid'
-    | 'icon-ghost' = 'secondary-solid';
-  export let size: 'small' | 'medium' | 'large' = 'small';
+  export let variant: IButtonVariant = 'secondary-solid';
+  export let size: 'tiny' | 'small' | 'medium' | 'large' = 'small';
+  export let padding: 'none' | 'narrow' | 'medium' | 'wide' | undefined = undefined;
 
   let buttonRef: HTMLAnchorElement | HTMLButtonElement;
+
+  let classes = [
+    'button',
+    variant ? `button--${variant}` : '',
+    size ? `button--size-${size}` : '',
+    padding ? `button--padding-${padding}` : '',
+  ].join(' ');
 
   export const focus = () => buttonRef.focus();
 </script>
@@ -45,7 +49,7 @@
   this={element}
   bind:this={buttonRef}
   {...$$restProps}
-  class="button button--{variant} button--{size} {$$restProps.class ? $$restProps.class : ''}"
+  class="{classes} {$$restProps.class ? $$restProps.class : ''}"
   on:click
 >
   {#if $$slots.default}
@@ -75,6 +79,11 @@
 
     &:focus-visible {
       outline: 3px solid var(--white-rich);
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+      opacity: 0.5;
     }
 
     :global(img) {
@@ -177,7 +186,36 @@
       }
     }
 
-    &--text {
+    &--dark-solid {
+      color: var(--white);
+      background-color: hsla(0, 0%, 0%, 0.5);
+
+      &:focus,
+      &:hover {
+        color: var(--white-rich);
+      }
+
+      &:active {
+        background-color: hsla(0, 0%, 0%, 0.75);
+      }
+    }
+
+    &--dark-outline {
+      color: var(--white);
+      background-color: transparent;
+      box-shadow: inset 0 0 0 0.125rem hsla(0, 0%, 0%, 0.5);
+
+      &:focus,
+      &:hover {
+        color: var(--white-rich);
+      }
+
+      &:active {
+        box-shadow: inset 0 0 0 0.125rem hsla(0, 0%, 0%, 0.75);
+      }
+    }
+
+    &--ghost {
       color: var(--white);
       background-color: transparent;
 
@@ -191,46 +229,36 @@
       }
     }
 
-    &--icon-solid {
-      padding: 0.5em;
-      color: var(--black);
-      background-color: var(--white);
-
-      &:focus,
-      &:hover {
-        background-color: var(--white-rich);
-      }
-
-      &:active {
-        background-color: var(--gray-200);
-      }
+    &--size-tiny {
+      font-size: 0.5rem;
     }
 
-    &--icon-ghost {
-      padding: 0.5rem;
-      color: var(--white);
-      background-color: transparent;
-
-      &:focus,
-      &:hover {
-        color: var(--white-rich);
-      }
-
-      &:active {
-        background-color: hsla(0, 0%, 100%, 0.06);
-      }
-    }
-
-    &--small {
+    &--size-small {
       font-size: 1rem;
     }
 
-    &--medium {
+    &--size-medium {
       font-size: 1.25rem;
     }
 
-    &--large {
+    &--size-large {
       font-size: 2rem;
+    }
+
+    &--padding-none {
+      padding: 0;
+    }
+
+    &--padding-narrow {
+      padding: 0.25em;
+    }
+
+    &--padding-medium {
+      padding: 0.5em;
+    }
+
+    &--padding-wide {
+      padding: 1em;
     }
   }
 </style>
