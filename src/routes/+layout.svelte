@@ -36,6 +36,7 @@
 
   afterNavigate(() => {
     NProgress.done();
+    document.querySelector('#main .page-main__inner')?.scrollTo(0, 0);
   });
 </script>
 
