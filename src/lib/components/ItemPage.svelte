@@ -78,6 +78,8 @@
     }
 
     &__image {
+      object-fit: cover;
+
       &.is-rounded {
         border-radius: 50%;
       }
