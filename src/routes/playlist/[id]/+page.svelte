@@ -114,7 +114,8 @@
           bind:this={followButton}
           element="button"
           type="submit"
-          variant="icon-ghost"
+          variant="ghost"
+          padding="medium"
           disabled={isPostingFollow}
         >
           {#if isFollowing}
@@ -188,7 +189,7 @@
       <h2>No songs have been added to this playlist.</h2>
       <div class="playlist__buttons">
         <Button element="a" href="/search">Search for a different playlist</Button>
-        <Button element="a" href="/playlists" variant="text">Go to your library</Button>
+        <Button element="a" href="/playlists" variant="ghost">Go to your library</Button>
       </div>
     </div>
   {/if}

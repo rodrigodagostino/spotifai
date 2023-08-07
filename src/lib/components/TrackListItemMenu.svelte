@@ -61,7 +61,7 @@
               <input hidden value={track.id} name="track-id" />
               <Button
                 element="button"
-                variant="text"
+                variant="ghost"
                 aria-label="Add {track.name} to {playlist.name} playlist"
                 disabled={tracksBeingAddedToPlaylist.includes(track.id)}
               >
@@ -99,7 +99,7 @@
           <input hidden value={track.id} name="track-id" />
           <Button
             element="button"
-            variant="text"
+            variant="ghost"
             aria-label="Remove {track.name} from playlist"
             disabled={tracksBeingRemovedFromPlaylist.includes(track.id)}
           >
@@ -128,34 +128,9 @@
         position: relative;
         cursor: default;
 
-        span,
-        :global(.button) {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          width: 100%;
-          padding: 0.5rem 0.75rem;
-          border-radius: 0.125rem;
-          position: relative;
-          font-size: 0.875rem;
-          font-weight: initial;
-          white-space: nowrap;
-        }
-
         &:focus-within,
         &:hover {
           background-color: var(--gray-750);
-
-          .track-list-item__submenu {
-            display: block;
-          }
-        }
-
-        &.has-submenu {
-          & > span,
-          & > :global(.button) {
-            padding: 0.5rem 0.5rem 0.5rem 0.75rem;
-          }
         }
       }
     }
@@ -189,6 +164,36 @@
           left: auto;
         }
       }
+
+      &__item {
+        span,
+        :global(.button) {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          padding: 0.5rem 0.75rem;
+          border-radius: 0.125rem;
+          position: relative;
+          font-size: 0.875rem;
+          font-weight: initial;
+          white-space: nowrap;
+        }
+
+        &:focus-within,
+        &:hover {
+          .track-list-item__submenu {
+            display: block;
+          }
+        }
+
+        &.has-submenu {
+          & > span,
+          & > :global(.button) {
+            padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+          }
+        }
+      }
     }
 
     &__submenu {
@@ -198,6 +203,7 @@
       left: calc(100% - 0.25rem);
       transform: translateY(-50%);
       list-style: none;
+      z-index: 1;
     }
   }
 </style>

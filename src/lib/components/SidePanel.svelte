@@ -38,7 +38,7 @@
 >
   <div class="side-panel__header">
     <SpotifyLogo />
-    <Button element="button" variant="icon-ghost" on:click={() => setIsMenuOpen(false)}>
+    <Button element="button" variant="ghost" padding="medium" on:click={() => setIsMenuOpen(false)}>
       <span class="sr-only">Close menu</span>
       <IconX size={32} />
     </Button>
@@ -77,7 +77,9 @@
     width: 20rem;
     transform: translate3d(-100%, 0, 0);
     opacity: 0;
-    transition: transform 0.24s, opacity 0.24s;
+    transition:
+      transform 0.24s,
+      opacity 0.24s;
     z-index: 100;
 
     &[aria-hidden='false'] {
@@ -132,12 +134,16 @@
       opacity: 0;
       visibility: hidden;
       z-index: 99;
-      transition: opacity 0.24s, visibility 0s 0.24s;
+      transition:
+        opacity 0.24s,
+        visibility 0s 0.24s;
 
       &[aria-hidden='false'] {
         opacity: 1;
         visibility: visible;
-        transition: opacity 0.24s, visibility 0s;
+        transition:
+          opacity 0.24s,
+          visibility 0s;
       }
     }
   }

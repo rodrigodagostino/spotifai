@@ -13,7 +13,7 @@
 </script>
 
 <form action="/search" method="GET" role="search" class="search-form">
-  <Button element="button" variant="icon-ghost">
+  <Button element="button" variant="ghost" padding="medium">
     <IconSearch size={24} />
   </Button>
   <input
@@ -26,7 +26,7 @@
     required
   />
   {#if query.trim() !== ''}
-    <Button element="a" href="/search" variant="icon-ghost">
+    <Button element="a" href="/search" variant="ghost" padding="medium">
       <IconX size={18} />
     </Button>
   {/if}
@@ -35,7 +35,6 @@
 <style lang="scss">
   .search-form {
     max-width: 100%;
-    margin-right: auto;
     position: relative;
 
     &__input {

@@ -46,6 +46,7 @@
 
 <style lang="scss">
   .top-panel-profile {
+    margin-left: auto;
     position: relative;
 
     :global(.button) {

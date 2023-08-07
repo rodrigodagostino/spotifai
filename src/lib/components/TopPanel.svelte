@@ -103,7 +103,6 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      margin-right: auto;
     }
 
     :global(.search-form) {

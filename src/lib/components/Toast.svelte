@@ -15,11 +15,16 @@
   <div class="toast__inner">
     <p class="toast__message" role="status">{message}</p>
     {#if !onCloseDestination}
-      <Button element="button" variant="icon-ghost" on:click|once={() => removeToast(id)}>
+      <Button
+        element="button"
+        variant="ghost"
+        padding="medium"
+        on:click|once={() => removeToast(id)}
+      >
         <IconX size={20} />
       </Button>
     {:else}
-      <Button element="a" href={onCloseDestination} variant="icon-ghost">
+      <Button element="a" href={onCloseDestination} variant="ghost" padding="medium">
         <IconX size={20} />
       </Button>
     {/if}

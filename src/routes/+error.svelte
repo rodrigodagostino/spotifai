@@ -28,7 +28,7 @@
       <p>The page you are looking for does not exist.</p>
       <div class="not-found__buttons">
         <Button element="a" href="/">Home</Button>
-        <Button element="a" href="/search" variant="text">Search</Button>
+        <Button element="a" href="/search" variant="ghost">Search</Button>
       </div>
     {:else if $page.status === 401}
       <p>Your current session has expired. Please, log out and log in again.</p>

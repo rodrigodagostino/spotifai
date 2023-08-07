@@ -77,7 +77,8 @@
     {#if track.id === $navigation.activeTrack?.id && !$navigation.paused}
       <Button
         element="button"
-        variant="icon-ghost"
+        variant="ghost"
+        padding="medium"
         aria-label="Pause {track.name}"
         on:click={() => setPaused(true)}
       >
@@ -86,7 +87,8 @@
     {:else}
       <Button
         element="button"
-        variant="icon-ghost"
+        variant="ghost"
+        padding="medium"
         aria-label="Play {track.name}"
         on:click={() => setActiveTrack(track)}
       >
@@ -133,7 +135,8 @@
   <div class="track-list-item__column">
     <Button
       element="button"
-      variant="icon-ghost"
+      variant="ghost"
+      padding="medium"
       on:click={() => (isActionsMenuHidden = !isActionsMenuHidden)}
     >
       <IconDots size={20} />

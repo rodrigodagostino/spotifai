@@ -14,7 +14,8 @@
         <h2 id="{id}-title" class="modal__title">{title}</h2>
         <Button
           element="button"
-          variant="icon-ghost"
+          variant="ghost"
+          padding="medium"
           aria-label="Close modal"
           data-micromodal-close
         >
